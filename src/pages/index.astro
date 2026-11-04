@@ -35,7 +35,10 @@ const projects = (home.projects?.slides ?? []).filter((pr) => pr.image);
 const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
 ---
 
-<Base overlayHeader>
+<Base
+  overlayHeader
+  description="Commercial doors, frames, locks, and security hardware for Ohio, Michigan, and Indiana since 1968. In-house fabrication and installation, plus shipping nationwide."
+>
   <section
     id="hero"
     class="parallax"
