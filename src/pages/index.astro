@@ -12,6 +12,7 @@ import testimonials from '../data/testimonials.json';
 import products from '../data/products.json';
 import { mapsUrl, telUrl } from '../lib/url';
 import { slugify, uniqueBrandNames } from '../lib/slug';
+import { groupProducts } from '../lib/productGroups';
 
 import heroImg from '../assets/hero.jpg';
 
@@ -21,16 +22,13 @@ const heroBgSmall = await getImage({ src: heroImg, width: 900, format: 'webp', q
 
 const { showStaff = false, showTestimonials = false } = home.sections ?? {};
 
-// Categories sharing a photo (e.g. Misc. and Lockers) would look repetitive as tiles, so show each photo once.
-const seenImages = new Set<string>();
-const categoryTiles = products.filter((c) => {
-  if (!c.image || seenImages.has(c.image)) return false;
-  seenImages.add(c.image);
-  return true;
-});
+const supplyGroups = groupProducts(products);
 const brands = uniqueBrandNames(products);
 
-const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
+const projects = (home.projects?.slides ?? []).filter((pr) => pr.image);
+
+// The owners appear beside "Talk to a person" in Get In Touch, once they have a photo.
+const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
 ---
 
 <Base overlayHeader>
@@ -129,23 +127,61 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     )
   }
 
-  <section id="supply" class="section supply text-center">
+  <section id="supply" class="section supply">
     <div class="container">
-      <p class="smallcaps">Our Products</p>
-      <h2 class="section-title">What We Supply</h2>
-      <ul class="tile-grid">
+      <div class="supply-head">
+        <div>
+          <p class="smallcaps">{home.supplyIntro?.eyebrow ?? 'What We Supply'}</p>
+          <h2 class="section-title">{home.supplyIntro?.heading ?? 'What We Supply'}</h2>
+        </div>
+        <div class="supply-head-side">
+          {home.supplyIntro?.text && <p>{home.supplyIntro.text}</p>}
+          <a class="btn btn-outline" href="/products/">Browse all {products.length} categories</a>
+        </div>
+      </div>
+      <ul class="supply-groups">
         {
-          categoryTiles.map((c) => (
-            <li>
-              <a class="tile" href={`/products/#${slugify(c.category)}`}>
-                <img src={c.image} alt="" width="400" height="270" loading="lazy" />
-                <span>{c.category}</span>
+          supplyGroups.map((g) => (
+            <li class="supply-group">
+              <a class="sg-media" href={`/products/#${slugify(g.name)}`} tabindex="-1" aria-hidden="true">
+                {g.items
+                  .filter((c) => c.image)
+                  .map((c, i) => (
+                    <img
+                      src={c.image}
+                      alt=""
+                      width="400"
+                      height="270"
+                      loading="lazy"
+                      data-for={slugify(c.category)}
+                      class:list={{ 'is-shown': i === 0 }}
+                    />
+                  ))}
+                <span class="sg-count">{g.items.length} categories</span>
               </a>
+              <div class="sg-body">
+                <p class="sg-name">{g.name}</p>
+                <h3>{g.pitch || g.name}</h3>
+                <ul class="sg-tags" aria-label={`${g.name} categories`}>
+                  {g.items.map((c) => (
+                    <li>
+                      <a href={`/products/#${slugify(c.category)}`} data-preview={slugify(c.category)}>
+                        {c.category}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a class="sg-more" href={`/products/#${slugify(g.name)}`}>
+                  Explore<span class="sr-only"> {g.name}</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6"></path>
+                  </svg>
+                </a>
+              </div>
             </li>
           ))
         }
       </ul>
-      <a class="btn btn-outline" href="/products/">See all {products.length} product categories</a>
     </div>
   </section>
 
@@ -175,42 +211,54 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     <div class="about-content">
       <p class="smallcaps">{home.about?.eyebrow ?? 'Who We Are'}</p>
       <h2 class="section-title">{home.about?.heading ?? 'About Us'}</h2>
-      {(home.about?.paragraphs ?? about.paragraphs).map((p, i) => <p class:list={{ 'about-lead': i === 0 }}>{p}</p>)}
-      <a class="btn btn-outline" href="/about-us/">{home.about?.linkLabel ?? 'More about us'}</a>
+      {(home.about?.paragraphs ?? []).map((p, i) => <p class:list={{ 'about-lead': i === 0 }}>{p}</p>)}
     </div>
     </div>
   </section>
 
+  <div class="drafting">
   {
-    slides.length > 0 && (
-      <section id="history" class="history" aria-roledescription="carousel" aria-label={home.projects?.eyebrow ?? 'Around Toledo'}>
-        <div class="history-track" tabindex="0">
-          {slides.map((sl, i) => (
-            <figure class="history-slide" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`}>
-              <img src={sl.image} alt={sl.title ?? ''} width="1200" height="560" loading="lazy" />
-              {(sl.title || sl.caption) && (
-                <figcaption class="history-caption">
-                  {home.projects?.eyebrow && <span class="history-eyebrow">{home.projects.eyebrow}</span>}
-                  {sl.title && <span class="history-title">{sl.title}</span>}
-                  {sl.caption && <span class="history-sub">{sl.caption}</span>}
-                </figcaption>
-              )}
-            </figure>
-          ))}
-        </div>
-        {slides.length > 1 && (
-          <>
-            <button class="history-btn prev" type="button" aria-label="Previous slide">‹</button>
-            <button class="history-btn next" type="button" aria-label="Next slide">›</button>
-            <div class="history-dots" aria-hidden="true">
-              {slides.map((_, i) => <span class:list={{ active: i === 0 }} />)}
+    projects.length > 0 && (
+      <section id="work" class="section work">
+        <div class="container">
+          <div class="work-head">
+            <div>
+              <p class="smallcaps">{home.projects?.eyebrow ?? 'Our Work'}</p>
+              <h2 class="section-title">{home.projects?.heading ?? 'Openings around Toledo'}</h2>
             </div>
-          </>
-        )}
+            {home.projects?.text && <p class="work-intro">{home.projects.text}</p>}
+          </div>
+          <ul class="work-grid">
+            {projects.map((pr, i) => (
+              <li class="work-sheet">
+                <figure>
+                  <div class="work-photo">
+                    <img src={pr.image} alt={pr.title ?? ''} width="1200" height="560" loading="lazy" />
+                  </div>
+                  <figcaption class="title-block">
+                    <span class="tb-cell tb-project">
+                      <small>Project</small>
+                      {pr.title}
+                    </span>
+                    {pr.caption && (
+                      <span class="tb-cell tb-location">
+                        <small>Location</small>
+                        {pr.caption}
+                      </span>
+                    )}
+                    <span class="tb-cell tb-sheet" aria-hidden="true">
+                      <small>Sheet</small>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     )
   }
-
 
   {showStaff && (
   <section id="staff" class="section dark text-center">
@@ -257,7 +305,7 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
   </section>
   )}
 
-  <section id="contact" class="section texture">
+  <section id="contact" class="section">
     <div class="container">
       <div class="text-center">
         <p class="smallcaps">{home.contactIntro?.eyebrow ?? 'Write to us today'}</p>
@@ -267,6 +315,19 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
       <div class="contact-card">
         <aside class="contact-panel" aria-label="Contact details">
           <p class="panel-eyebrow">Talk to a person</p>
+          {owners.length > 0 && (
+            <div class="panel-people">
+              <span class="people-photos" aria-hidden="true">
+                {owners.map((o) => (
+                  <img src={o.photo} alt="" width="64" height="64" loading="lazy" />
+                ))}
+              </span>
+              <span class="people-text">
+                <span class="people-names">{owners.map((o) => o.name).join(' & ')}</span>
+                <span class="people-title">{owners.length === 1 ? owners[0].title : 'Owners'}</span>
+              </span>
+            </div>
+          )}
           <a class="contact-phone" href={telUrl(site.phone)}>
             <span class="contact-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>
@@ -332,6 +393,7 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
       </div>
     </div>
   </section>
+  </div>
 </Base>
 
 <script>
@@ -366,6 +428,47 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     reduceMotion.addEventListener('change', update);
+  }
+
+  // What We Do: cards fade up once, in sequence, the first time the grid scrolls into view.
+  // Skipped if the grid is already on screen at load (the hero has its own entrance then).
+  const servicesGrid = document.querySelector<HTMLElement>('.services-grid');
+  if (
+    servicesGrid &&
+    !reduceMotion.matches &&
+    'IntersectionObserver' in window &&
+    servicesGrid.getBoundingClientRect().top > window.innerHeight * 0.85
+  ) {
+    servicesGrid.classList.add('reveal-ready');
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          servicesGrid.classList.add('is-revealed');
+          io.disconnect();
+        }
+      },
+      { rootMargin: '0px 0px -15% 0px' },
+    );
+    io.observe(servicesGrid);
+  }
+
+  // What We Supply: pointing at a category crossfades the group's photo to that category.
+  for (const card of document.querySelectorAll<HTMLElement>('.supply-group')) {
+    const imgs = [...card.querySelectorAll<HTMLImageElement>('.sg-media img')];
+    if (imgs.length < 2) continue;
+    const show = (key?: string) => {
+      const target = imgs.find((im) => im.dataset.for === key) ?? imgs[0];
+      imgs.forEach((im) => im.classList.toggle('is-shown', im === target));
+    };
+    card.querySelectorAll<HTMLElement>('[data-preview]').forEach((link) => {
+      const key = link.dataset.preview;
+      link.addEventListener('mouseenter', () => show(key));
+      link.addEventListener('focus', () => show(key));
+    });
+    card.addEventListener('mouseleave', () => show());
+    card.addEventListener('focusout', (e) => {
+      if (!card.contains(e.relatedTarget as Node)) show();
+    });
   }
 
   // Stats: count up from 0 to the number ("55+", "50 States") every time the band scrolls into view.
@@ -416,35 +519,6 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     for (const el of counters) {
       reset(el);
       io.observe(el);
-    }
-  }
-
-  const track = document.querySelector<HTMLElement>('.history-track');
-  if (track) {
-    const go = (dir: number) => {
-      const w = track.clientWidth;
-      const max = track.scrollWidth - w;
-      let next = track.scrollLeft + dir * w;
-      if (next > max + 1) next = 0; // wrap around
-      if (next < -1) next = max;
-      track.scrollTo({ left: next, behavior: 'smooth' });
-    };
-    document.querySelector('.history-btn.prev')?.addEventListener('click', () => go(-1));
-    document.querySelector('.history-btn.next')?.addEventListener('click', () => go(1));
-    track.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') go(-1);
-      if (e.key === 'ArrowRight') go(1);
-    });
-    const dots = [...document.querySelectorAll<HTMLElement>('.history-dots span')];
-    if (dots.length) {
-      track.addEventListener(
-        'scroll',
-        () => {
-          const i = Math.round(track.scrollLeft / track.clientWidth);
-          dots.forEach((d, j) => d.classList.toggle('active', j === i));
-        },
-        { passive: true },
-      );
     }
   }
 </script>

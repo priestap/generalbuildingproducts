@@ -21,9 +21,15 @@ content:
         label: Category name
         type: string
         required: true
+      - name: group
+        label: Group
+        description: Which section of the Products page this category appears in.
+        type: select
+        options:
+          values: ["Doors & Frames", "Door Hardware", "Security", "Restrooms & Specialties"]
       - name: image
         label: Category photo
-        description: A wide photo works best (about 400 × 270 pixels).
+        description: Shown small and square-cropped on the Products page, and as a tile on the home page. About 400 × 270 pixels works well.
         type: image
         options:
           path: public/images/products
@@ -206,6 +212,20 @@ content:
           - name: text
             label: Text
             type: string
+      - name: supplyIntro
+        label: What We Supply intro
+        description: The product groups and categories below it come from Products.
+        type: object
+        fields:
+          - name: eyebrow
+            label: Small line above the heading
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: text
+            label: Intro text
+            type: text
       - name: about
         label: Who We Are (home page)
         type: object
@@ -221,18 +241,22 @@ content:
             description: The first paragraph is shown slightly larger.
             type: text
             list: true
-          - name: linkLabel
-            label: Button label
-            type: string
       - name: projects
-        label: Photo slideshow (below Who We Are)
+        label: Our Work (project photos below Who We Are)
         type: object
         fields:
           - name: eyebrow
-            label: Small line above each photo's title
+            label: Small line above the heading
             type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: text
+            label: Intro text
+            description: One short sentence about the projects shown.
+            type: text
           - name: slides
-            label: Photos
+            label: Projects
             type: object
             list:
               collapsible:
@@ -241,15 +265,15 @@ content:
             fields:
               - name: image
                 label: Photo
-                description: A wide photo works best (about 1200 × 560 pixels).
+                description: A landscape photo works best (at least 1200 pixels wide).
                 type: image
                 options:
                   path: public/images/projects
               - name: title
-                label: Title
+                label: Project name
                 type: string
               - name: caption
-                label: Caption
+                label: Location
                 type: string
       - name: contactIntro
         label: Get In Touch intro
@@ -287,25 +311,14 @@ content:
               path: public/images/icons
 
   - name: about
-    label: About Us
+    label: Owners (Get In Touch)
     type: file
     path: src/data/about.json
     format: json
     fields:
-      - name: subtitle
-        label: Subtitle (About Us page)
-        type: string
-      - name: paragraphs
-        label: Paragraphs
-        type: text
-        list: true
-      - name: ownersHeading
-        label: Owners section heading
-        description: Leave blank to use "Meet the Owner" or "Meet the Owners" automatically.
-        type: string
       - name: owners
         label: Owners
-        description: An owner only appears on the site once they have a photo.
+        description: Shown with their photo next to "Talk to a person" in the Get In Touch section. An owner only appears once they have a photo.
         type: object
         list:
           collapsible:

@@ -1,6 +1,7 @@
 ---
 import site from '../data/site.json';
 import home from '../data/home.json';
+import { telUrl } from '../lib/url';
 
 interface Props {
   overlay?: boolean;
@@ -9,12 +10,11 @@ const { overlay = false } = Astro.props;
 
 const { showStaff = false, showTestimonials = false } = home.sections ?? {};
 const links = [
-  { label: 'About Us', href: '/about-us/' },
+  { label: 'About Us', href: '/#about' },
   { label: 'Products', href: '/products/' },
   { label: 'Services', href: '/#service' },
   showStaff && { label: 'Our Staff', href: '/#staff' },
   showTestimonials && { label: 'Testimonials', href: '/#testimonial' },
-  { label: 'Contact Us', href: '/#contact' },
 ].filter((l): l is { label: string; href: string } => Boolean(l));
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 ---
@@ -29,7 +29,7 @@ const path = Astro.url.pathname.replace(/\/?$/, '/');
       <span class="nav-toggle-bars" aria-hidden="true"></span>
     </button>
     <nav id="site-nav" class="site-nav" aria-label="Main">
-      <ul>
+      <ul class="nav-links">
         {
           links.map((l) => (
             <li>
@@ -40,6 +40,15 @@ const path = Astro.url.pathname.replace(/\/?$/, '/');
           ))
         }
       </ul>
+      <div class="nav-actions">
+        <a class="nav-phone" href={telUrl(site.phone)}>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path>
+          </svg>
+          <span class="sr-only">Call us at </span>{site.phone}
+        </a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/#contact">Contact Us</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -52,19 +61,63 @@ const path = Astro.url.pathname.replace(/\/?$/, '/');
   const setOpen = (open: boolean) => {
     toggle.setAttribute('aria-expanded', String(open));
     header.classList.toggle('nav-open', open);
+    if (open) header.classList.remove('is-tucked');
   };
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   nav.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) setOpen(false);
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+      setOpen(false);
+      toggle.focus();
+    }
   });
 
   // Over the hero the header is transparent; it becomes solid once you scroll past it.
-  if (header.classList.contains('is-overlay')) {
-    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 120);
-    update();
-    window.addEventListener('scroll', update, { passive: true });
+  // On every page it tucks away while you scroll down and comes back as soon as you scroll up.
+  const overlay = header.classList.contains('is-overlay');
+  let lastY = window.scrollY;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY;
+    if (overlay) header.classList.toggle('is-scrolled', y > 120);
+    const delta = y - lastY;
+    if (Math.abs(delta) > 6) {
+      const tuck =
+        delta > 0 && y > 320 && !header.classList.contains('nav-open') && !header.contains(document.activeElement);
+      header.classList.toggle('is-tucked', tuck);
+      lastY = y;
+    }
+  };
+  update();
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  header.addEventListener('focusin', () => header.classList.remove('is-tucked'));
+
+  // On the home page, underline "About Us" / "Services" while that section is on screen.
+  const spyLinks = [...nav.querySelectorAll<HTMLAnchorElement>('a[href^="/#"]')].filter(
+    (a) => location.pathname === '/' && document.getElementById(a.hash.slice(1)),
+  );
+  if (spyLinks.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const link = spyLinks.find((a) => a.hash === `#${entry.target.id}`);
+          link?.classList.toggle('is-active', entry.isIntersecting);
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px' },
+    );
+    spyLinks.forEach((a) => io.observe(document.getElementById(a.hash.slice(1))!));
   }
 </script>

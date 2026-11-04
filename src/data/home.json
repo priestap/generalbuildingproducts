@@ -91,17 +91,23 @@
       }
     ]
   },
+  "supplyIntro": {
+    "eyebrow": "What We Supply",
+    "heading": "Every door, and everything on it",
+    "text": "Doors, frames, hardware, and security, plus the restroom and building specialties that finish the job. One supplier, one order, one call."
+  },
   "about": {
     "eyebrow": "Who We Are",
     "heading": "Doors, frames & hardware, done right since 1968",
     "paragraphs": [
       "General Building Products has been in the commercial door and hardware business since 1968. More than 55 years later, we offer a full line of commercial doors and frames, plus all the hardware that goes with them.",
       "Behind the counter is a team that knows openings inside and out, including a bonded locksmith, an AHC certified consultant, and a complete hollow metal and door fabrication shop."
-    ],
-    "linkLabel": "More about us"
+    ]
   },
   "projects": {
     "eyebrow": "Our Work",
+    "heading": "Openings around Toledo",
+    "text": "A few of the local landmarks we've supplied doors, frames, and hardware for.",
     "slides": [
       {
         "image": "/images/projects/toledo-museum-of-art.jpg",
@@ -111,7 +117,7 @@
       {
         "image": "/images/projects/fifth-third-field.jpg",
         "title": "Fifth Third Field",
-        "caption": "Home of the Toledo Mud Hens"
+        "caption": "Downtown Toledo · Home of the Mud Hens"
       }
     ]
   },

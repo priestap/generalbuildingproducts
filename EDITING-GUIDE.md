@@ -8,7 +8,7 @@ You can change the products, staff, testimonials, and contact details yourself. 
 2. Sign in with the email address you were invited with. You'll get a sign-in link by email.
 3. Open the **General Building Products** site.
 
-The menu on the left lists everything you can edit: **Products**, **Our Staff**, **Testimonials**, **Home page**, **About Us**, and **Contact info**.
+The menu on the left lists everything you can edit: **Products**, **Our Staff**, **Testimonials**, **Home page**, **Owners**, and **Contact info**.
 
 ## Changing a product link
 
@@ -38,14 +38,14 @@ These two sections are hidden for now. To turn one on:
 
 You can fill in staff and testimonials ahead of time under **Our Staff** and **Testimonials**. Nothing shows on the site until the switch is on.
 
-## Owner photos on the About Us page
+## Owner photos in the Get In Touch section
 
-1. Click **About Us**.
+1. Click **Owners (Get In Touch)**.
 2. Under **Owners**, click a name.
-3. Upload a **Photo** and check the **Title**. Portrait photos (taller than wide) look best.
+3. Upload a **Photo** and check the **Title**. Photos are shown as a small circle, so a head-and-shoulders shot works best.
 4. Click **Save**.
 
-An owner appears on the About Us page only once they have a photo.
+An owner appears next to "Talk to a person" on the home page only once they have a photo. With two or more, the photos overlap in a small group.
 
 ## When will I see my change?
 
