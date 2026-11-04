@@ -22,7 +22,7 @@ Developer edits locally   ──► git push ───────────�
 | Staff | `src/data/staff.json` |
 | Testimonials | `src/data/testimonials.json` |
 | Home page banner and services | `src/data/home.json` |
-| About text | `src/data/about.json` |
+| Owners shown in Get In Touch | `src/data/about.json` |
 | Phone, email, address | `src/data/site.json` |
 | CMS editing forms | `.pages.yml` |
 | Images the CMS can change | `public/images/` |

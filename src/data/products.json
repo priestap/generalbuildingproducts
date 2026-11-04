@@ -1,6 +1,7 @@
 [
   {
-    "category": "HM Doors & Frames",
+    "category": "Hollow Metal Doors & Frames",
+    "group": "Doors & Frames",
     "image": "/images/products/ceco-doors-thumb.jpg",
     "brands": [
       {
@@ -11,6 +12,7 @@
   },
   {
     "category": "Hinges",
+    "group": "Door Hardware",
     "image": "/images/products/stanley-hinge-thumb.jpg",
     "brands": [
       {
@@ -33,6 +35,7 @@
   },
   {
     "category": "Wood Doors",
+    "group": "Doors & Frames",
     "image": "/images/products/wood-door-thumb.jpg",
     "brands": [
       {
@@ -55,6 +58,7 @@
   },
   {
     "category": "High Security Locksets",
+    "group": "Door Hardware",
     "image": "/images/products/high-security-lockset-thumb.jpg",
     "brands": [
       {
@@ -69,6 +73,7 @@
   },
   {
     "category": "Closers",
+    "group": "Door Hardware",
     "image": "/images/products/closers-thumb.jpg",
     "brands": [
       {
@@ -83,6 +88,7 @@
   },
   {
     "category": "Exit Devices",
+    "group": "Door Hardware",
     "image": "/images/products/exit-devices-thumb.jpg",
     "brands": [
       {
@@ -97,6 +103,7 @@
   },
   {
     "category": "Weatherstripping",
+    "group": "Door Hardware",
     "image": "/images/products/weatherstripping-thumb.jpg",
     "brands": [
       {
@@ -110,7 +117,8 @@
     ]
   },
   {
-    "category": "RR Partitions",
+    "category": "Restroom Partitions",
+    "group": "Restrooms & Specialties",
     "image": "/images/products/rr-partitions-thumb.jpg",
     "brands": [
       {
@@ -132,7 +140,8 @@
     ]
   },
   {
-    "category": "RR Accessories",
+    "category": "Restroom Accessories",
+    "group": "Restrooms & Specialties",
     "image": "/images/products/rr-accessories-thumb.jpg",
     "brands": [
       {
@@ -151,6 +160,7 @@
   },
   {
     "category": "Specialty Door Controls & Power Operators",
+    "group": "Door Hardware",
     "image": "/images/products/specialty-door-controls-thumb.jpg",
     "brands": [
       {
@@ -165,6 +175,7 @@
   },
   {
     "category": "Specialty Doors",
+    "group": "Doors & Frames",
     "image": "/images/products/specialty-doors-thumb.jpg",
     "brands": [
       {
@@ -195,6 +206,7 @@
   },
   {
     "category": "Security Access Control",
+    "group": "Security",
     "image": "/images/products/security-access-control-thumb.jpg",
     "brands": [
       {
@@ -213,6 +225,7 @@
   },
   {
     "category": "Security Alarms",
+    "group": "Security",
     "image": "/images/products/security-alarms-thumb.jpg",
     "brands": [
       {
@@ -231,6 +244,7 @@
   },
   {
     "category": "Residential",
+    "group": "Doors & Frames",
     "image": "/images/products/residential-thumb.jpg",
     "brands": [
       {
@@ -241,6 +255,7 @@
   },
   {
     "category": "Misc.",
+    "group": "Restrooms & Specialties",
     "image": "/images/products/misc-thumb.jpg",
     "brands": [
       {
@@ -259,6 +274,7 @@
   },
   {
     "category": "Access Doors",
+    "group": "Doors & Frames",
     "image": "/images/products/access-doors-thumb.jpg",
     "brands": [
       {
@@ -269,6 +285,7 @@
   },
   {
     "category": "Lockers",
+    "group": "Restrooms & Specialties",
     "image": "/images/products/misc-thumb.jpg",
     "brands": [
       {
@@ -279,6 +296,7 @@
   },
   {
     "category": "Mailboxes",
+    "group": "Restrooms & Specialties",
     "image": "/images/products/mailboxes-thumb.jpg",
     "brands": [
       {

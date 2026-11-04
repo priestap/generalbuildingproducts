@@ -7,15 +7,123 @@
     "eyebrow": "Serving Ohio, Michigan, and Indiana for over 55 years",
     "heading": "We supply commercial doors, locks, & security systems",
     "paragraphs": [
-      "General Building Products has supplied commercial doors, locks, and security systems in the Ohio, Michigan, and Indiana areas since 1968.",
-      "Our experienced installers make sure your job is done right.",
-      "We offer shipping to all 50 states and Canada. (includes Alaska & Hawaii)"
+      "Since 1968, General Building Products has supplied commercial doors, frames, locks, and security hardware to projects across Ohio, Michigan, and Indiana.",
+      "Our experienced installers make sure the job is done right, and we ship anywhere in the U.S. and Canada."
     ]
   },
+  "stats": [
+    {
+      "value": "55+",
+      "label": "Years in business"
+    },
+    {
+      "value": "35+",
+      "label": "Manufacturers carried"
+    },
+    {
+      "value": "OH · MI · IN",
+      "label": "Local service area"
+    },
+    {
+      "value": "50 States",
+      "label": "Plus Canada, shipped to"
+    }
+  ],
+  "servicesIntro": {
+    "eyebrow": "Services We Offer",
+    "heading": "What We Do",
+    "text": "More than a parts counter. We prep, deliver, and stand behind every order, from a single closer to a building's worth of openings."
+  },
   "services": [
-    { "title": "Installation", "description": "Installation of hardware prior to delivery", "icon": "/images/icons/installation.svg" },
-    { "title": "Delivery", "description": "Delivery within specified area", "icon": "/images/icons/delivery.svg" },
-    { "title": "Shipping", "description": "Shipping outside delivery area", "icon": "/images/icons/shipping.svg" },
-    { "title": "Custom Solutions", "description": "Custom solutions for unique situations", "icon": "/images/icons/custom-solutions.svg" }
-  ]
+    {
+      "title": "Installation",
+      "description": "Hardware is installed in our shop before delivery, so doors arrive ready to hang.",
+      "icon": "/images/icons/installation.svg"
+    },
+    {
+      "title": "Service Calls & Estimates",
+      "description": "We come to you for on-site estimates, and follow up to make sure everything works right.",
+      "icon": "/images/icons/service-calls.svg"
+    },
+    {
+      "title": "Local Delivery",
+      "description": "No truck big enough? We deliver throughout our local service area.",
+      "icon": "/images/icons/delivery.svg"
+    },
+    {
+      "title": "Nationwide Shipping",
+      "description": "Outside our delivery area, we ship to all 50 states and Canada.",
+      "icon": "/images/icons/shipping.svg"
+    },
+    {
+      "title": "Custom Solutions",
+      "description": "Unusual opening or tricky spec? Our team will work out a solution for your project.",
+      "icon": "/images/icons/custom-solutions.svg"
+    }
+  ],
+  "servicesCta": {
+    "heading": "Not sure what you need?",
+    "text": "Call and talk it through with our team."
+  },
+  "highlights": {
+    "eyebrow": "Why General Building Products",
+    "heading": "Expertise you won't find at a big‑box store",
+    "items": [
+      {
+        "icon": "fabrication",
+        "title": "In-house fabrication shop",
+        "description": "Our complete hollow metal and door fabrication shop can build or modify to fit your unique situation."
+      },
+      {
+        "icon": "certified",
+        "title": "AHC certified consultant",
+        "description": "An Architectural Hardware Consultant on staff helps make sure the right hardware is specified for every opening."
+      },
+      {
+        "icon": "key",
+        "title": "Bonded locksmith",
+        "description": "A bonded locksmith on our team handles keying, lock work, and security hardware."
+      },
+      {
+        "icon": "stack",
+        "title": "One source for the whole job",
+        "description": "Doors, frames, hardware, partitions, lockers, and accessories from more than 35 manufacturers."
+      }
+    ]
+  },
+  "supplyIntro": {
+    "eyebrow": "What We Supply",
+    "heading": "Every door, and everything on it",
+    "text": "Doors, frames, hardware, and security, plus the restroom and building specialties that finish the job. One supplier, one order, one call."
+  },
+  "about": {
+    "eyebrow": "Who We Are",
+    "heading": "Doors, frames & hardware, done right since 1968",
+    "paragraphs": [
+      "General Building Products has been in the commercial door and hardware business since 1968. More than 55 years later, we offer a full line of commercial doors and frames, plus all the hardware that goes with them.",
+      "Behind the counter is a team that knows openings inside and out, including a bonded locksmith, an AHC certified consultant, and a complete hollow metal and door fabrication shop."
+    ]
+  },
+  "projects": {
+    "eyebrow": "Our Work",
+    "heading": "Openings around Toledo",
+    "text": "A few of the local landmarks we've supplied doors, frames, and hardware for.",
+    "slides": [
+      {
+        "image": "/images/projects/toledo-museum-of-art.jpg",
+        "title": "Toledo Museum of Art",
+        "caption": "Toledo, Ohio"
+      },
+      {
+        "image": "/images/projects/fifth-third-field.jpg",
+        "title": "Fifth Third Field",
+        "caption": "Downtown Toledo · Home of the Mud Hens"
+      }
+    ]
+  },
+  "contactIntro": {
+    "eyebrow": "Write to us today",
+    "heading": "Get In Touch",
+    "text": "Have a project coming up or an opening that needs attention? Tell us what you're working on, and we'll help you find the right doors and hardware. Prefer to talk? Give us a call."
+  }
 }
