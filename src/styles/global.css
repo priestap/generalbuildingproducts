@@ -1316,266 +1316,76 @@ body:not(.has-overlay-header) main {
     align-items: end;
   }
 }
-.work-grid {
-  display: grid;
-  gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
-  margin: 0;
-  padding: 0;
-}
-@media (min-width: 900px) {
-  .work-grid {
-    gap: 40px;
-    padding-bottom: 48px; /* room for the staggered sheets */
-  }
-  .work-sheet:nth-child(even) {
-    transform: translateY(48px);
-  }
-}
-.work-sheet figure {
-  margin: 0;
-  background: #fff;
-  padding: 10px;
-  border: 1px solid rgba(49, 104, 135, 0.25);
-  box-shadow: 0 18px 40px rgba(28, 50, 70, 0.12);
-}
-.work-photo {
+/* Project reel: one slowly scrolling row of photos with titles (two copies of the row, shifted by
+   half, loop seamlessly). Pauses on hover; with reduced motion it becomes a still, swipeable row. */
+.work-reel {
   overflow: hidden;
+  padding: 4px 0 12px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
-.work-photo img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.work-sheet:hover .work-photo img {
-  transform: scale(1.04);
-}
-@media (prefers-reduced-motion: reduce) {
-  .work-photo img {
-    transition: none;
-  }
-  .work-sheet:hover .work-photo img {
-    transform: none;
-  }
-}
-/* architectural title block */
-.title-block {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  margin-top: 10px;
-  border: 1.5px solid var(--blue);
-  color: var(--ink);
-}
-.tb-cell {
-  display: block;
-  padding: 8px 12px 10px;
-  line-height: 1.25;
-}
-.tb-cell small {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 2px;
-}
-.tb-project {
-  grid-column: 1;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-}
-.tb-location {
-  grid-column: 1;
-  border-top: 1px solid rgba(49, 104, 135, 0.4);
-  font-size: 0.98rem;
-  color: var(--muted);
-}
-.tb-sheet {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  display: grid;
-  align-content: center;
-  min-width: 76px;
-  border-left: 1.5px solid var(--blue);
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  font-variant-numeric: lining-nums;
-  color: var(--blue);
-}
-
-/* Some of our clients: every project as a ruled list (client, industry, location) in the same drawing-set
-   style as the sheets above. Small thumbnails (the source photos are only 480px); on desktop the
-   hovered row's photo pops out. */
-.clients {
-  margin-top: 40px;
-  background: #fff;
-  border: 1.5px solid var(--blue);
-  box-shadow: 0 18px 40px rgba(28, 50, 70, 0.1);
-}
-@media (min-width: 900px) {
-  .clients {
-    margin-top: 32px; /* the staggered sheets above already leave room */
-  }
-}
-.clients-head {
+.reel-track {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  padding: 12px 18px;
-  border-bottom: 1.5px solid var(--blue);
+  width: max-content;
+  animation: marquee 80s linear infinite;
 }
-.clients-head h3,
-.clients-head span {
+.work-reel:hover .reel-track {
+  animation-play-state: paused;
+}
+.reel-row {
+  display: flex;
+  flex-shrink: 0;
+  gap: 20px;
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue);
+  padding: 0 10px; /* half the gap at each end, so the seam between copies matches */
 }
-.clients-head span {
-  font-weight: 600;
-  color: var(--muted);
+.reel-card {
+  width: 280px;
+  flex: 0 0 auto;
+  background: #fff;
+  padding: 8px 8px 14px;
+  border: 1px solid rgba(49, 104, 135, 0.18);
+  box-shadow: 0 12px 28px -14px rgba(28, 50, 70, 0.3);
 }
-.clients-table {
+.reel-card img {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.98rem;
-}
-.clients-table thead th {
-  padding: 8px 14px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: left;
-  color: var(--blue);
-  border-bottom: 1px solid rgba(49, 104, 135, 0.4);
-}
-.clients-table td,
-.clients-table tbody th {
-  padding: 10px 14px;
-  vertical-align: middle;
-  text-align: left;
-  border-bottom: 1px solid rgba(49, 104, 135, 0.16);
-}
-.clients-table tbody tr:last-child > * {
-  border-bottom: 0;
-}
-.clients-table th + th,
-.clients-table td + td,
-.clients-table td + th,
-.clients-table th + td {
-  border-left: 1px solid rgba(49, 104, 135, 0.16);
-}
-.clients-table .cl-photo {
-  width: 100px;
-  padding-left: 18px;
-}
-.clients-table .cl-photo + * {
-  border-left: 0;
-}
-.cl-thumb {
-  position: relative;
-  display: block;
-  width: 72px;
-  height: 54px;
-}
-.cl-thumb img {
-  position: absolute;
-  inset: 0;
-  width: 72px;
-  height: 54px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 2px;
-  transform-origin: left center;
-  transition:
-    transform 0.4s cubic-bezier(0.22, 0.75, 0.25, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 0.75, 0.25, 1);
+  margin-bottom: 12px;
 }
-.cl-name {
+.reel-title {
+  display: block;
+  padding: 0 6px;
   font-family: var(--font-display);
-  font-weight: var(--display-weight);
   font-size: 1.15rem;
+  line-height: 1.2;
   color: var(--ink);
 }
-.cl-type,
-.cl-loc {
+.reel-sub {
+  display: block;
+  padding: 2px 6px 0;
+  font-size: 0.88rem;
   color: var(--muted);
 }
-.clients-table tbody tr {
-  transition: background-color 0.25s;
-}
-@media (hover: hover) and (min-width: 700px) {
-  .clients-table tbody tr:hover {
-    background: rgba(121, 175, 206, 0.09);
-  }
-  /* pop the photo out over the table so the small thumbnail can be seen properly */
-  .clients-table tbody tr:hover .cl-thumb img {
-    z-index: 5;
-    transform: scale(3.4);
-    box-shadow: 0 6px 16px rgba(28, 50, 70, 0.35);
+@media (max-width: 767.98px) {
+  .reel-card {
+    width: 230px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cl-thumb img {
-    transition: none;
+  .work-reel {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
-}
-/* phones: each row becomes a compact card (photo, name, type and location) */
-@media (max-width: 699.98px) {
-  .clients-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
+  .reel-track {
+    animation: none;
   }
-  .clients-table tbody tr {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    grid-template-areas: 'photo title' 'photo meta';
-    column-gap: 14px;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(49, 104, 135, 0.16);
+  .reel-row[aria-hidden='true'] {
+    display: none;
   }
-  .clients-table tbody tr:last-child {
-    border-bottom: 0;
-  }
-  .clients-table tbody tr > * {
-    padding: 0;
-    border: 0 !important;
-    width: auto;
-  }
-  .clients-table .cl-photo {
-    grid-area: photo;
-  }
-  .clients-table .cl-name {
-    grid-area: title;
-    align-self: end;
-    line-height: 1.2;
-  }
-  .clients-table .cl-type {
-    grid-area: meta;
-    align-self: start;
-    font-size: 0.88rem;
-  }
-  .clients-table .cl-loc {
-    display: none; /* the location reads fine on desktop; phones keep it to name + type */
-  }
-  .clients-table .cl-photo {
-    width: auto;
-    padding: 0;
-  }
-  .clients-table .cl-name {
-    font-size: 1.08rem;
+  .reel-row {
+    padding-inline: var(--gutter);
   }
 }
 

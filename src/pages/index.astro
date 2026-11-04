@@ -30,9 +30,6 @@ const logoFor = new Map(brandLogos.filter((b) => b.logo).map((b) => [b.name.toLo
 const brands = uniqueBrandNames(products).map((name) => ({ name, logo: logoFor.get(name.toLowerCase()) }));
 
 const projects = (home.projects?.slides ?? []).filter((pr) => pr.image);
-// Featured projects get the big "drawing sheet" cards; every project appears in the client list below.
-const featured = projects.filter((pr) => pr.featured !== false);
-const showClients = projects.length > featured.length;
 
 // The owners appear beside "Talk to a person" in Get In Touch, once they have a photo.
 const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
@@ -240,65 +237,21 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
             </div>
             {home.projects?.text && <p class="work-intro">{home.projects.text}</p>}
           </div>
-          <ul class="work-grid">
-            {featured.map((pr, i) => (
-              <li class="work-sheet">
-                <figure>
-                  <div class="work-photo">
-                    <img src={pr.image} alt={pr.title ?? ''} width="1200" height="560" loading="lazy" />
-                  </div>
-                  <figcaption class="title-block">
-                    <span class="tb-cell tb-project">
-                      <small>Project</small>
-                      {pr.title}
-                    </span>
-                    {pr.caption && (
-                      <span class="tb-cell tb-location">
-                        <small>Location</small>
-                        {pr.caption}
-                      </span>
-                    )}
-                    <span class="tb-cell tb-sheet" aria-hidden="true">
-                      <small>Sheet</small>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                  </figcaption>
-                </figure>
-              </li>
+        </div>
+        <div class="work-reel">
+          <div class="reel-track">
+            {[0, 1].map((copy) => (
+              <ul class="reel-row" aria-hidden={copy === 1 ? 'true' : undefined}>
+                {projects.map((pr) => (
+                  <li class="reel-card">
+                    <img src={pr.image} alt={copy === 0 ? pr.title : ''} width="480" height="360" loading="lazy" />
+                    <span class="reel-title">{pr.title}</span>
+                    {(pr.caption || pr.type) && <span class="reel-sub">{pr.caption || pr.type}</span>}
+                  </li>
+                ))}
+              </ul>
             ))}
-          </ul>
-
-          {showClients && (
-            <div class="clients">
-              <div class="clients-head">
-                <h3>Some of our clients</h3>
-              </div>
-              <table class="clients-table">
-                <thead>
-                  <tr>
-                    <th scope="col" class="cl-photo"><span class="sr-only">Photo</span></th>
-                    <th scope="col">Client</th>
-                    <th scope="col">Industry</th>
-                    <th scope="col">Location</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projects.map((pr) => (
-                    <tr>
-                      <td class="cl-photo">
-                        <span class="cl-thumb">
-                          <img src={pr.image} alt="" width="480" height="360" loading="lazy" />
-                        </span>
-                      </td>
-                      <th scope="row" class="cl-name">{pr.title}</th>
-                      <td class="cl-type">{pr.type}</td>
-                      <td class="cl-loc">{pr.caption || '—'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          </div>
         </div>
       </section>
     )

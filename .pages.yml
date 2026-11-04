@@ -242,7 +242,7 @@ content:
             type: text
             list: true
       - name: projects
-        label: Our Work (featured projects + Some of our clients)
+        label: Our Work (scrolling project photos)
         type: object
         fields:
           - name: eyebrow
@@ -274,16 +274,11 @@ content:
                 type: string
               - name: type
                 label: Industry
-                description: For example "Ballpark", "Auto dealership", "Hospital". Shown in the "Some of our clients" list.
+                description: For example "Ballpark", "Auto dealership", "Hospital". Shown under the project name when there is no location.
                 type: string
               - name: caption
                 label: Location
                 type: string
-              - name: featured
-                label: Feature as a large photo
-                description: Featured projects get a big "drawing sheet" card. Every project is listed under "Some of our clients". Use a large, sharp photo (1200 pixels wide or more) for featured ones.
-                type: boolean
-                default: false
       - name: contactIntro
         label: Get In Touch intro
         type: object

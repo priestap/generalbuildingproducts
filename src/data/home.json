@@ -113,50 +113,43 @@
         "image": "/images/projects/toledo-museum-of-art.jpg",
         "title": "Toledo Museum of Art",
         "type": "Art museum",
-        "caption": "Toledo, Ohio",
-        "featured": true
+        "caption": "Toledo, Ohio"
       },
       {
         "image": "/images/projects/fifth-third-field.jpg",
         "title": "Fifth Third Field",
         "type": "Ballpark",
-        "caption": "Downtown Toledo · Home of the Mud Hens",
-        "featured": true
+        "caption": "Downtown Toledo · Home of the Mud Hens"
       },
       {
         "image": "/images/projects/great-wolf-lodge.jpg",
         "title": "Great Wolf Lodge",
         "type": "Hotel & indoor waterpark",
-        "caption": "Sandusky, Ohio",
-        "featured": false
+        "caption": "Sandusky, Ohio"
       },
       {
         "image": "/images/projects/toledo-jeep-assembly.jpg",
         "title": "Toledo Jeep Assembly Plant",
         "type": "Automotive manufacturing",
-        "caption": "Toledo, Ohio",
-        "featured": false
+        "caption": "Toledo, Ohio"
       },
       {
         "image": "/images/projects/toledo-correctional.jpg",
         "title": "Toledo Correctional Institution",
         "type": "Correctional facility",
-        "caption": "Toledo, Ohio",
-        "featured": false
+        "caption": "Toledo, Ohio"
       },
       {
         "image": "/images/projects/taylor-hyundai.jpg",
         "title": "Taylor Hyundai",
         "type": "Auto dealership",
-        "caption": "Toledo, Ohio",
-        "featured": false
+        "caption": "Toledo, Ohio"
       },
       {
         "image": "/images/projects/audi-dealership.jpg",
         "title": "Audi dealership",
         "type": "Auto dealership",
-        "caption": "",
-        "featured": false
+        "caption": ""
       }
     ]
   },
