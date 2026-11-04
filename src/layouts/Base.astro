@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import FontPreview from '../components/FontPreview.astro';
 import site from '../data/site.json';
 
 interface Props {
@@ -33,7 +34,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Zilla+Slab:wght@600;700&display=swap"
     />
   </head>
   <body class={overlayHeader ? 'has-overlay-header' : undefined}>
@@ -43,5 +44,6 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
       <slot />
     </main>
     <Footer />
+    {import.meta.env.DEV && <FontPreview />}
   </body>
 </html>

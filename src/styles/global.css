@@ -11,7 +11,8 @@
   --bg-soft: #f9f9f9;
   --overlay: linear-gradient(to bottom, rgba(171, 158, 122, 0.6) 0%, rgba(11, 39, 80, 0.6) 100%);
   --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-display: 'Zilla Slab', Georgia, serif;
+  --display-weight: 600; /* DM Serif Display only comes in 400 */
   --container: 1140px;
   --gutter: 16px;
   --header-h: 76px;
@@ -50,9 +51,11 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: var(--display-weight);
   line-height: 1.15;
   margin: 0 0 0.5em;
+  text-wrap: balance; /* no single-word last lines */
+  font-variant-numeric: lining-nums; /* full-height numbers, e.g. 1968 */
 }
 p {
   margin: 0 0 1em;
@@ -424,8 +427,10 @@ body:not(.has-overlay-header) main {
   grid-column: 1 / -1;
 }
 .stat-value {
+  font-variant-numeric: lining-nums;
   display: block;
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: clamp(1.7rem, 3.2vw, 2.4rem);
   line-height: 1.1;
   color: var(--blue);
@@ -522,7 +527,7 @@ body:not(.has-overlay-header) main {
 .service-cta h3 {
   color: #fff;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: var(--display-weight);
   font-size: 1.45rem;
 }
 .service-cta p {
@@ -706,6 +711,7 @@ body:not(.has-overlay-header) main {
 }
 .marquee-row li {
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: 1.6rem;
   color: #4a4f58;
   white-space: nowrap;
@@ -769,6 +775,7 @@ body:not(.has-overlay-header) main {
 }
 /* round gold "Since 1968" seal on the photo's corner */
 .since-badge {
+  font-variant-numeric: lining-nums;
   position: absolute;
   right: 20px;
   top: 20px;
@@ -780,6 +787,7 @@ body:not(.has-overlay-header) main {
   background: var(--gold);
   color: #fff;
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: 1.9rem;
   line-height: 1;
   text-align: center;
@@ -881,6 +889,7 @@ body:not(.has-overlay-header) main {
 .history-title {
   display: block;
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: clamp(1.7rem, 4vw, 2.6rem);
   line-height: 1.1;
 }
@@ -1023,6 +1032,7 @@ body:not(.has-overlay-header) main {
 }
 .testimonial p {
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: 1.35rem;
   line-height: 1.35;
 }
@@ -1233,6 +1243,7 @@ body:not(.has-overlay-header) main {
 .owner-name {
   display: block;
   font-family: var(--font-display);
+  font-weight: var(--display-weight);
   font-size: 1.45rem;
   color: var(--blue);
 }

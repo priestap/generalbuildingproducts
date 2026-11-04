@@ -1,0 +1,81 @@
+---
+/**
+ * DEV ONLY (rendered from Base.astro behind import.meta.env.DEV), never part of the built site.
+ * A small panel for comparing title fonts on the real pages.
+ * The choice is kept in localStorage so it follows you between pages.
+ */
+const titleFonts = [
+  { name: 'Zilla Slab', weight: 600, query: 'Zilla+Slab:wght@600;700' },
+  { name: 'DM Serif Display', weight: 400, query: 'DM+Serif+Display' },
+  { name: 'Roboto Slab', weight: 600, query: 'Roboto+Slab:wght@600;700' },
+  { name: 'Fraunces', weight: 600, query: 'Fraunces:opsz,wght@9..144,600' },
+  { name: 'Source Serif 4', weight: 600, query: 'Source+Serif+4:opsz,wght@8..60,600' },
+];
+---
+
+<div id="font-preview" data-titles={JSON.stringify(titleFonts)}>
+  <strong>Font preview (dev only)</strong>
+  <label>
+    Titles
+    <select>{titleFonts.map((f) => <option>{f.name}</option>)}</select>
+  </label>
+</div>
+
+<style>
+  #font-preview {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    background: rgba(17, 20, 26, 0.92);
+    color: #fff;
+    border-radius: 6px;
+    font: 13px/1.3 system-ui, sans-serif;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  #font-preview label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #font-preview select {
+    font: inherit;
+  }
+</style>
+
+<script>
+  const panel = document.getElementById('font-preview')!;
+  const fonts: { name: string; weight: number; query: string }[] = JSON.parse(panel.dataset.titles!);
+  const select = panel.querySelector('select')!;
+  const root = document.documentElement;
+
+  const apply = (name: string) => {
+    const f = fonts.find((x) => x.name === name);
+    if (!f) return;
+    const href = `https://fonts.googleapis.com/css2?family=${f.query}&display=swap`;
+    if (!document.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.append(link);
+    }
+    root.style.setProperty('--font-display', `'${f.name}', Georgia, serif`);
+    root.style.setProperty('--display-weight', String(f.weight));
+    try {
+      localStorage.setItem('font-preview-title', name);
+    } catch {}
+  };
+
+  let saved: string | null = null;
+  try {
+    saved = localStorage.getItem('font-preview-title');
+  } catch {}
+  if (saved && fonts.some((f) => f.name === saved)) {
+    select.value = saved;
+    apply(saved);
+  }
+  select.addEventListener('change', () => apply(select.value));
+</script>
