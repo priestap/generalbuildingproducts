@@ -242,7 +242,7 @@ content:
             type: text
             list: true
       - name: projects
-        label: Our Work (project photos below Who We Are)
+        label: Our Work (featured projects + Project schedule)
         type: object
         fields:
           - name: eyebrow
@@ -272,9 +272,18 @@ content:
               - name: title
                 label: Project name
                 type: string
+              - name: type
+                label: Type of project
+                description: For example "Ballpark", "Auto dealership", "Hospital". Shown in the Project schedule.
+                type: string
               - name: caption
                 label: Location
                 type: string
+              - name: featured
+                label: Feature as a large photo
+                description: Featured projects get a big "drawing sheet" card. Every project is listed in the Project schedule. Use a large, sharp photo (1200 pixels wide or more) for featured ones.
+                type: boolean
+                default: false
       - name: contactIntro
         label: Get In Touch intro
         type: object

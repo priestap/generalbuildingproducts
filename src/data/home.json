@@ -107,17 +107,56 @@
   "projects": {
     "eyebrow": "Our Work",
     "heading": "Openings around Toledo",
-    "text": "A few of the local landmarks we've supplied doors, frames, and hardware for.",
+    "text": "From ballparks to assembly plants, a few of the projects we've supplied doors, frames, and hardware for.",
     "slides": [
       {
         "image": "/images/projects/toledo-museum-of-art.jpg",
         "title": "Toledo Museum of Art",
-        "caption": "Toledo, Ohio"
+        "type": "Art museum",
+        "caption": "Toledo, Ohio",
+        "featured": true
       },
       {
         "image": "/images/projects/fifth-third-field.jpg",
         "title": "Fifth Third Field",
-        "caption": "Downtown Toledo · Home of the Mud Hens"
+        "type": "Ballpark",
+        "caption": "Downtown Toledo · Home of the Mud Hens",
+        "featured": true
+      },
+      {
+        "image": "/images/projects/great-wolf-lodge.jpg",
+        "title": "Great Wolf Lodge",
+        "type": "Hotel & indoor waterpark",
+        "caption": "",
+        "featured": false
+      },
+      {
+        "image": "/images/projects/toledo-jeep-assembly.jpg",
+        "title": "Toledo Jeep Assembly Plant",
+        "type": "Automotive manufacturing",
+        "caption": "Toledo, Ohio",
+        "featured": false
+      },
+      {
+        "image": "/images/projects/toledo-correctional.jpg",
+        "title": "Toledo Correctional Institution",
+        "type": "Correctional facility",
+        "caption": "Toledo, Ohio",
+        "featured": false
+      },
+      {
+        "image": "/images/projects/hyundai-dealership.jpg",
+        "title": "Hyundai dealership",
+        "type": "Auto dealership",
+        "caption": "",
+        "featured": false
+      },
+      {
+        "image": "/images/projects/audi-dealership.jpg",
+        "title": "Audi dealership",
+        "type": "Auto dealership",
+        "caption": "",
+        "featured": false
       }
     ]
   },
