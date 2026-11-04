@@ -1,0 +1,38 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import about from '../data/about.json';
+import heroImg from '../assets/hero.jpg';
+
+const bg = await getImage({ src: heroImg, width: 1800, format: 'webp', quality: 72 });
+
+// An owner only appears once they have a photo.
+const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
+---
+
+<Base title="About Us" description={about.subtitle}>
+  <header class="page-header has-bg about-header" style={`--bg: url('${bg.src}')`}>
+    <div class="container">
+      <h1>About Us</h1>
+      {about.subtitle && <p class="lead">{about.subtitle}</p>}
+    </div>
+  </header>
+
+  <div class="container prose about-body">
+    {
+      owners.map((o) => (
+        <figure class="owner-card">
+          <div class="owner-frame">
+            <img src={o.photo} alt={o.name} width="240" height="300" loading="eager" />
+          </div>
+          <figcaption>
+            <span class="owner-name">{o.name}</span>
+            {o.title && <span class="owner-title">{o.title}</span>}
+          </figcaption>
+        </figure>
+      ))
+    }
+    {about.paragraphs.map((p) => <p>{p}</p>)}
+    <p class="about-cta"><a class="btn btn-outline" href="/#contact">Contact Us</a></p>
+  </div>
+</Base>

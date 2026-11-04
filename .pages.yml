@@ -1,0 +1,221 @@
+# Pages CMS configuration — https://pagescms.org/docs/configuration/
+# Defines the editing forms the client sees. Layout and design are not editable here on purpose.
+
+media:
+  input: public/images
+  output: /images
+  categories: [image]
+
+content:
+  - name: products
+    label: Products
+    type: file
+    path: src/data/products.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{category}"
+    fields:
+      - name: category
+        label: Category name
+        type: string
+        required: true
+      - name: image
+        label: Category photo
+        description: A wide photo works best (about 400 × 270 pixels).
+        type: image
+        options:
+          path: public/images/products
+      - name: brands
+        label: Brands
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Brand name
+            type: string
+            required: true
+          - name: url
+            label: Website address
+            description: The full address, starting with https://
+            type: string
+            required: true
+            pattern:
+              regex: "^https?://\\S+$"
+              message: "Start the address with https:// (for example https://www.example.com/)"
+
+  - name: staff
+    label: Our Staff
+    type: file
+    path: src/data/staff.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{name}"
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: title
+        label: Job title
+        type: string
+      - name: photo
+        label: Photo
+        description: A portrait (taller than wide) works best.
+        type: image
+        options:
+          path: public/images/staff
+
+  - name: testimonials
+    label: Testimonials
+    type: file
+    path: src/data/testimonials.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{name}"
+    fields:
+      - name: quote
+        label: Quote
+        type: text
+        required: true
+      - name: name
+        label: Customer name
+        type: string
+        required: true
+      - name: photo
+        label: Photo (optional)
+        type: image
+        options:
+          path: public/images/testimonials
+
+  - name: home
+    label: Home page
+    type: file
+    path: src/data/home.json
+    format: json
+    fields:
+      - name: sections
+        label: Show or hide sections
+        type: object
+        fields:
+          - name: showStaff
+            label: Show the "Our Staff" section
+            description: Turn this on once the staff photos are ready. Edit staff under "Our Staff".
+            type: boolean
+          - name: showTestimonials
+            label: Show the "Testimonials" section
+            description: Edit testimonials under "Testimonials".
+            type: boolean
+      - name: hero
+        label: Top banner
+        type: object
+        fields:
+          - name: eyebrow
+            label: Small line above the headline
+            type: string
+          - name: heading
+            label: Headline
+            type: string
+            required: true
+          - name: paragraphs
+            label: Paragraphs
+            type: text
+            list: true
+      - name: services
+        label: Services
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Service
+            type: string
+            required: true
+          - name: description
+            label: Description
+            type: string
+          - name: icon
+            label: Icon
+            type: image
+            options:
+              path: public/images/icons
+
+  - name: about
+    label: About Us
+    type: file
+    path: src/data/about.json
+    format: json
+    fields:
+      - name: subtitle
+        label: Subtitle (About Us page)
+        type: string
+      - name: paragraphs
+        label: Paragraphs
+        type: text
+        list: true
+      - name: ownersHeading
+        label: Owners section heading
+        description: Leave blank to use "Meet the Owner" or "Meet the Owners" automatically.
+        type: string
+      - name: owners
+        label: Owners
+        description: An owner only appears on the site once they have a photo.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: title
+            label: Title
+            type: string
+          - name: photo
+            label: Photo
+            description: A portrait (taller than wide) works best.
+            type: image
+            options:
+              path: public/images/staff
+
+  - name: site
+    label: Contact info
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: companyName
+        label: Company name
+        type: string
+        required: true
+      - name: tagline
+        label: Short description (shown in search results)
+        type: string
+      - name: phone
+        label: Phone
+        type: string
+      - name: email
+        label: Email shown on the site
+        description: This does not change where contact form messages are delivered (see the editing guide).
+        type: string
+      - name: street
+        label: Street address
+        type: string
+      - name: cityStateZip
+        label: City, state, ZIP
+        type: string
+      - name: copyrightStartYear
+        label: Copyright start year
+        type: string

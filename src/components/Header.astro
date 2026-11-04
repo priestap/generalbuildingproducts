@@ -1,0 +1,70 @@
+---
+import site from '../data/site.json';
+import home from '../data/home.json';
+
+interface Props {
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
+
+const { showStaff = false, showTestimonials = false } = home.sections ?? {};
+const links = [
+  { label: 'About Us', href: '/about-us/' },
+  { label: 'Products', href: '/products/' },
+  { label: 'Services', href: '/#service' },
+  showStaff && { label: 'Our Staff', href: '/#staff' },
+  showTestimonials && { label: 'Testimonials', href: '/#testimonial' },
+  { label: 'Contact Us', href: '/#contact' },
+].filter((l): l is { label: string; href: string } => Boolean(l));
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+---
+
+<header id="site-header" class:list={['site-header', { 'is-overlay': overlay, 'is-solid': !overlay }]}>
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label={`${site.companyName} home`}>
+      <img src="/images/logo.svg" alt={site.companyName} width="234" height="49" />
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={l.href === path ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.nav-toggle')!;
+  const nav = header.querySelector<HTMLElement>('#site-nav')!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    header.classList.toggle('nav-open', open);
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  nav.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // Over the hero the header is transparent; it becomes solid once you scroll past it.
+  if (header.classList.contains('is-overlay')) {
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 120);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+</script>

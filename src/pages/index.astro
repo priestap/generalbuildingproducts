@@ -1,0 +1,205 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import site from '../data/site.json';
+import home from '../data/home.json';
+import about from '../data/about.json';
+import staff from '../data/staff.json';
+import testimonials from '../data/testimonials.json';
+import { mapsUrl, telUrl } from '../lib/url';
+
+import heroImg from '../assets/hero.jpg';
+import aboutImg from '../assets/about.jpg';
+import historyMuseum from '../assets/history-toledo-museum-of-art.jpg';
+import historyField from '../assets/history-fifth-third-field.jpg';
+
+// Background images can't use <Image>, so optimize them here and pass the URLs to CSS.
+const heroBg = await getImage({ src: heroImg, width: 1800, format: 'webp', quality: 72 });
+const heroBgSmall = await getImage({ src: heroImg, width: 900, format: 'webp', quality: 70 });
+const aboutBg = await getImage({ src: aboutImg, width: 975, format: 'webp', quality: 75 });
+
+const { showStaff = false, showTestimonials = false } = home.sections ?? {};
+
+const history = [
+  { src: historyMuseum, alt: 'Toledo Museum of Art' },
+  { src: historyField, alt: 'Fifth Third Field, Toledo' },
+];
+---
+
+<Base overlayHeader>
+  <section
+    id="hero"
+    class="parallax"
+    style={`--bg: url('${heroBg.src}'); --bg-small: url('${heroBgSmall.src}');`}
+  >
+    <div class="parallax-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <p class="eyebrow">{home.hero.eyebrow}</p>
+      <h1>{home.hero.heading}</h1>
+      {home.hero.paragraphs.map((p) => <p>{p}</p>)}
+      <a class="btn btn-primary" href="#contact">Contact Us</a>
+    </div>
+  </section>
+
+  <section id="service" class="section texture text-center">
+    <div class="container">
+      <p class="smallcaps">Services We Offer</p>
+      <h2 class="section-title">What We Do</h2>
+      <ul class="services">
+        {
+          home.services.map((s) => (
+            <li class="service">
+              {s.icon && <img src={s.icon} alt="" width="60" height="60" loading="lazy" />}
+              <h3>{s.title}</h3>
+              <p>{s.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="about" class="about-split">
+    <div class="about-image" style={`--bg: url('${aboutBg.src}')`} role="img" aria-label="Building facade"></div>
+    <div class="about-content">
+      <p class="smallcaps">Who We Are</p>
+      <h2 class="section-title">About Us</h2>
+      {about.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <section id="history" class="history" aria-roledescription="carousel" aria-label="Our work">
+    <div class="history-track" tabindex="0">
+      {
+        history.map((h, i) => (
+          <figure class="history-slide" aria-roledescription="slide" aria-label={`${i + 1} of ${history.length}`}>
+            <Image src={h.src} alt={h.alt} widths={[600, 1200]} sizes="100vw" quality={75} loading="lazy" />
+          </figure>
+        ))
+      }
+    </div>
+    <button class="history-btn prev" type="button" aria-label="Previous slide">‹</button>
+    <button class="history-btn next" type="button" aria-label="Next slide">›</button>
+  </section>
+
+  {showStaff && (
+  <section id="staff" class="section dark text-center">
+    <div class="container">
+      <p class="smallcaps">Our Experienced Pros</p>
+      <h2 class="section-title">Our Staff</h2>
+      <ul class="team">
+        {
+          staff.map((m) => (
+            <li class="team-member">
+              <img src={m.photo || '/images/staff/placeholder.jpg'} alt="" width="300" height="450" loading="lazy" />
+              <div class="team-info">
+                <h3>{m.name}</h3>
+                {m.title && <p>{m.title}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  )}
+
+  {showTestimonials && (
+  <section id="testimonial" class="parallax" style={`--bg: url('${heroBg.src}'); --bg-small: url('${heroBgSmall.src}');`}>
+    <div class="parallax-bg" aria-hidden="true"></div>
+    <div class="container text-center">
+      <p class="smallcaps">What Our Customers Say</p>
+      <h2 class="section-title">Testimonials</h2>
+      <div class="testimonials">
+        {
+          testimonials.map((t) => (
+            <blockquote class="testimonial">
+              <p>{t.quote}</p>
+              <footer>
+                {t.photo && <img src={t.photo} alt="" width="56" height="56" loading="lazy" />}
+                <cite>{t.name}</cite>
+              </footer>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+  )}
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="text-center">
+        <p class="smallcaps">Write to us today</p>
+        <h2 class="section-title">Get In Touch</h2>
+      </div>
+      <div class="contact-grid">
+        <ContactForm />
+        <address class="contact-details">
+          <p><b>Tel:</b> <a href={telUrl(site.phone)}>{site.phone}</a></p>
+          <p><b>E-Mail:</b> <a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <h3>Address:</h3>
+          <p>
+            <a href={mapsUrl(site.street, site.cityStateZip)}>
+              {site.street}<br />{site.cityStateZip}
+            </a>
+          </p>
+        </address>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Parallax: the background layer moves slower than the page as you scroll.
+  // Done with a transform (not background-attachment: fixed) so it works in every browser, phones included.
+  const layers = [...document.querySelectorAll<HTMLElement>('.parallax-bg')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const SPEED = 0.35; // must match --parallax-speed in global.css
+
+  if (layers.length) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (reduceMotion.matches) {
+        layers.forEach((l) => (l.style.transform = ''));
+        return;
+      }
+      const vh = window.innerHeight;
+      for (const layer of layers) {
+        const rect = layer.parentElement!.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) continue; // off screen
+        layer.style.transform = `translate3d(0, ${(-rect.top * SPEED).toFixed(1)}px, 0)`;
+      }
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    reduceMotion.addEventListener('change', update);
+  }
+
+  const track = document.querySelector<HTMLElement>('.history-track');
+  if (track) {
+    const go = (dir: number) => {
+      const w = track.clientWidth;
+      const max = track.scrollWidth - w;
+      let next = track.scrollLeft + dir * w;
+      if (next > max + 1) next = 0; // wrap around
+      if (next < -1) next = max;
+      track.scrollTo({ left: next, behavior: 'smooth' });
+    };
+    document.querySelector('.history-btn.prev')?.addEventListener('click', () => go(-1));
+    document.querySelector('.history-btn.next')?.addEventListener('click', () => go(1));
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key === 'ArrowRight') go(1);
+    });
+  }
+</script>

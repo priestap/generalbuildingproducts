@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "showStaff": false,
+    "showTestimonials": false
+  },
+  "hero": {
+    "eyebrow": "Serving Ohio, Michigan, and Indiana for over 55 years",
+    "heading": "We supply commercial doors, locks, & security systems",
+    "paragraphs": [
+      "General Building Products has supplied commercial doors, locks, and security systems in the Ohio, Michigan, and Indiana areas since 1968.",
+      "Our experienced installers make sure your job is done right.",
+      "We offer shipping to all 50 states and Canada. (includes Alaska & Hawaii)"
+    ]
+  },
+  "services": [
+    { "title": "Installation", "description": "Installation of hardware prior to delivery", "icon": "/images/icons/installation.svg" },
+    { "title": "Delivery", "description": "Delivery within specified area", "icon": "/images/icons/delivery.svg" },
+    { "title": "Shipping", "description": "Shipping outside delivery area", "icon": "/images/icons/shipping.svg" },
+    { "title": "Custom Solutions", "description": "Custom solutions for unique situations", "icon": "/images/icons/custom-solutions.svg" }
+  ]
+}
