@@ -603,6 +603,43 @@ body:not(.has-overlay-header) main {
 #hero .btn {
   margin-top: 1em;
 }
+/* Phones: the header is 64px here (not 84), and everything down to the buttons should fit on a
+   small screen. The second paragraph (installers, shipping) is repeated in the stats band and
+   What We Do, so phones skip it. */
+@media (max-width: 767.98px) {
+  #hero .hero-inner {
+    padding-top: calc(64px + 28px);
+  }
+  #hero .eyebrow {
+    font-size: 16px;
+    line-height: 1.4;
+    text-wrap: balance;
+    margin-bottom: 0.5em;
+  }
+  #hero h1 {
+    font-size: clamp(2.1rem, 9.4vw, 2.5rem);
+    margin-bottom: 0.45em;
+  }
+  #hero p {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+  #hero .hero-inner > p:not(.eyebrow) ~ p:not(.eyebrow) {
+    display: none;
+  }
+  .hero-actions {
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 1.25em;
+  }
+  #hero .hero-actions .btn {
+    flex: 1 1 0;
+    padding-inline: 0.6em;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+}
 
 /* ---------- Hero buttons ---------- */
 .hero-actions {
