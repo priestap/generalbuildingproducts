@@ -30,11 +30,9 @@ const logoFor = new Map(brandLogos.filter((b) => b.logo).map((b) => [b.name.toLo
 const brands = uniqueBrandNames(products).map((name) => ({ name, logo: logoFor.get(name.toLowerCase()) }));
 
 const projects = (home.projects?.slides ?? []).filter((pr) => pr.image);
-// Featured projects get the big "drawing sheet" cards; every project is listed in the schedule below
-// them, numbered in one sequence (the sheets are 01, 02, ...).
-const sheetNo = (pr: (typeof projects)[number]) => String(projects.indexOf(pr) + 1).padStart(2, '0');
+// Featured projects get the big "drawing sheet" cards; every project appears in the client list below.
 const featured = projects.filter((pr) => pr.featured !== false);
-const showSchedule = projects.length > featured.length;
+const showClients = projects.length > featured.length;
 
 // The owners appear beside "Talk to a person" in Get In Touch, once they have a photo.
 const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
@@ -243,7 +241,7 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
             {home.projects?.text && <p class="work-intro">{home.projects.text}</p>}
           </div>
           <ul class="work-grid">
-            {featured.map((pr) => (
+            {featured.map((pr, i) => (
               <li class="work-sheet">
                 <figure>
                   <div class="work-photo">
@@ -262,7 +260,7 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
                     )}
                     <span class="tb-cell tb-sheet" aria-hidden="true">
                       <small>Sheet</small>
-                      {sheetNo(pr)}
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                   </figcaption>
                 </figure>
@@ -270,34 +268,31 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
             ))}
           </ul>
 
-          {showSchedule && (
-            <div class="schedule">
-              <div class="schedule-head">
-                <h3>Project schedule</h3>
-                <span>{projects.length} projects</span>
+          {showClients && (
+            <div class="clients">
+              <div class="clients-head">
+                <h3>Some of our clients</h3>
               </div>
-              <table class="schedule-table">
+              <table class="clients-table">
                 <thead>
                   <tr>
-                    <th scope="col" class="sc-no">No.</th>
-                    <th scope="col" class="sc-photo"><span class="sr-only">Photo</span></th>
-                    <th scope="col">Project</th>
-                    <th scope="col">Type</th>
+                    <th scope="col" class="cl-photo"><span class="sr-only">Photo</span></th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Industry</th>
                     <th scope="col">Location</th>
                   </tr>
                 </thead>
                 <tbody>
                   {projects.map((pr) => (
                     <tr>
-                      <td class="sc-no">{sheetNo(pr)}</td>
-                      <td class="sc-photo">
-                        <span class="sc-thumb">
+                      <td class="cl-photo">
+                        <span class="cl-thumb">
                           <img src={pr.image} alt="" width="480" height="360" loading="lazy" />
                         </span>
                       </td>
-                      <th scope="row" class="sc-title">{pr.title}</th>
-                      <td class="sc-type">{pr.type}</td>
-                      <td class="sc-loc">{pr.caption || '—'}</td>
+                      <th scope="row" class="cl-name">{pr.title}</th>
+                      <td class="cl-type">{pr.type}</td>
+                      <td class="cl-loc">{pr.caption || '—'}</td>
                     </tr>
                   ))}
                 </tbody>

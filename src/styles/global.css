@@ -1407,20 +1407,21 @@ body:not(.has-overlay-header) main {
   color: var(--blue);
 }
 
-/* Project schedule: every project in a table styled like a door schedule on a drawing set.
-   Small thumbnails (the source photos are only 480px); on desktop the hovered row's photo pops out. */
-.schedule {
+/* Some of our clients: every project as a ruled list (client, industry, location) in the same drawing-set
+   style as the sheets above. Small thumbnails (the source photos are only 480px); on desktop the
+   hovered row's photo pops out. */
+.clients {
   margin-top: 40px;
   background: #fff;
   border: 1.5px solid var(--blue);
   box-shadow: 0 18px 40px rgba(28, 50, 70, 0.1);
 }
 @media (min-width: 900px) {
-  .schedule {
+  .clients {
     margin-top: 32px; /* the staggered sheets above already leave room */
   }
 }
-.schedule-head {
+.clients-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -1428,8 +1429,8 @@ body:not(.has-overlay-header) main {
   padding: 12px 18px;
   border-bottom: 1.5px solid var(--blue);
 }
-.schedule-head h3,
-.schedule-head span {
+.clients-head h3,
+.clients-head span {
   margin: 0;
   font-family: var(--font-body);
   font-size: 12px;
@@ -1438,16 +1439,16 @@ body:not(.has-overlay-header) main {
   text-transform: uppercase;
   color: var(--blue);
 }
-.schedule-head span {
+.clients-head span {
   font-weight: 600;
   color: var(--muted);
 }
-.schedule-table {
+.clients-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.98rem;
 }
-.schedule-table thead th {
+.clients-table thead th {
   padding: 8px 14px;
   font-size: 10.5px;
   font-weight: 700;
@@ -1457,49 +1458,36 @@ body:not(.has-overlay-header) main {
   color: var(--blue);
   border-bottom: 1px solid rgba(49, 104, 135, 0.4);
 }
-.schedule-table td,
-.schedule-table tbody th {
+.clients-table td,
+.clients-table tbody th {
   padding: 10px 14px;
   vertical-align: middle;
   text-align: left;
   border-bottom: 1px solid rgba(49, 104, 135, 0.16);
 }
-.schedule-table tbody tr:last-child > * {
+.clients-table tbody tr:last-child > * {
   border-bottom: 0;
 }
-.schedule-table th + th,
-.schedule-table td + td,
-.schedule-table td + th,
-.schedule-table th + td {
+.clients-table th + th,
+.clients-table td + td,
+.clients-table td + th,
+.clients-table th + td {
   border-left: 1px solid rgba(49, 104, 135, 0.16);
 }
-.schedule-table .sc-no {
-  width: 64px;
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-variant-numeric: lining-nums tabular-nums;
-  color: var(--blue);
-  border-right: 1.5px solid var(--blue);
-}
-.schedule-table thead .sc-no {
-  font-family: var(--font-body);
-  font-size: 10.5px;
-}
-.schedule-table .sc-photo {
+.clients-table .cl-photo {
   width: 100px;
+  padding-left: 18px;
+}
+.clients-table .cl-photo + * {
   border-left: 0;
 }
-.schedule-table .sc-photo + * {
-  border-left: 0;
-}
-.sc-thumb {
+.cl-thumb {
   position: relative;
   display: block;
   width: 72px;
   height: 54px;
 }
-.sc-thumb img {
+.cl-thumb img {
   position: absolute;
   inset: 0;
   width: 72px;
@@ -1511,87 +1499,82 @@ body:not(.has-overlay-header) main {
     transform 0.4s cubic-bezier(0.22, 0.75, 0.25, 1),
     box-shadow 0.4s cubic-bezier(0.22, 0.75, 0.25, 1);
 }
-.sc-title {
+.cl-name {
   font-family: var(--font-display);
   font-weight: var(--display-weight);
   font-size: 1.15rem;
   color: var(--ink);
 }
-.sc-type,
-.sc-loc {
+.cl-type,
+.cl-loc {
   color: var(--muted);
 }
-.schedule-table tbody tr {
+.clients-table tbody tr {
   transition: background-color 0.25s;
 }
 @media (hover: hover) and (min-width: 700px) {
-  .schedule-table tbody tr:hover {
+  .clients-table tbody tr:hover {
     background: rgba(121, 175, 206, 0.09);
   }
   /* pop the photo out over the table so the small thumbnail can be seen properly */
-  .schedule-table tbody tr:hover .sc-thumb img {
+  .clients-table tbody tr:hover .cl-thumb img {
     z-index: 5;
     transform: scale(3.4);
     box-shadow: 0 6px 16px rgba(28, 50, 70, 0.35);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sc-thumb img {
+  .cl-thumb img {
     transition: none;
   }
 }
 /* phones: each row becomes a compact card (photo, name, type and location) */
 @media (max-width: 699.98px) {
-  .schedule-table thead {
+  .clients-table thead {
     position: absolute;
     width: 1px;
     height: 1px;
     overflow: hidden;
     clip: rect(0 0 0 0);
   }
-  .schedule-table tbody tr {
+  .clients-table tbody tr {
     display: grid;
-    grid-template-columns: 72px 1fr auto;
-    grid-template-areas: 'photo title no' 'photo meta no';
+    grid-template-columns: 72px 1fr;
+    grid-template-areas: 'photo title' 'photo meta';
     column-gap: 14px;
     align-items: center;
     padding: 12px 16px;
     border-bottom: 1px solid rgba(49, 104, 135, 0.16);
   }
-  .schedule-table tbody tr:last-child {
+  .clients-table tbody tr:last-child {
     border-bottom: 0;
   }
-  .schedule-table tbody tr > * {
+  .clients-table tbody tr > * {
     padding: 0;
     border: 0 !important;
     width: auto;
   }
-  .schedule-table .sc-photo {
+  .clients-table .cl-photo {
     grid-area: photo;
   }
-  .schedule-table .sc-title {
+  .clients-table .cl-name {
     grid-area: title;
     align-self: end;
     line-height: 1.2;
   }
-  .schedule-table .sc-type {
+  .clients-table .cl-type {
     grid-area: meta;
     align-self: start;
     font-size: 0.88rem;
   }
-  .schedule-table .sc-loc {
+  .clients-table .cl-loc {
     display: none; /* the location reads fine on desktop; phones keep it to name + type */
   }
-  .schedule-table .sc-no,
-  .schedule-table .sc-photo {
+  .clients-table .cl-photo {
     width: auto;
+    padding: 0;
   }
-  .schedule-table .sc-no {
-    grid-area: no;
-    font-size: 1.1rem;
-    text-align: right;
-  }
-  .schedule-table .sc-title {
+  .clients-table .cl-name {
     font-size: 1.08rem;
   }
 }
