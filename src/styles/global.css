@@ -1316,32 +1316,33 @@ body:not(.has-overlay-header) main {
     align-items: end;
   }
 }
-/* Project reel: one slowly scrolling row of photos with titles (two copies of the row, shifted by
-   half, loop seamlessly). Pauses on hover; with reduced motion it becomes a still, swipeable row. */
+/* Project row: a still, horizontally scrollable row of photo cards. It only moves when someone clicks
+   the arrows, swipes, or scrolls it. The first card lines up with the content column. */
 .work-reel {
-  overflow: hidden;
-  padding: 4px 0 12px;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  --edge: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: none;
+  padding: 4px 0 16px;
 }
-.reel-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 80s linear infinite;
+.work-reel::-webkit-scrollbar {
+  display: none;
 }
-.work-reel:hover .reel-track {
-  animation-play-state: paused;
+.work-reel:focus-visible {
+  outline-offset: -3px;
 }
 .reel-row {
   display: flex;
-  flex-shrink: 0;
   gap: 20px;
+  width: max-content;
   margin: 0;
-  padding: 0 10px; /* half the gap at each end, so the seam between copies matches */
+  padding: 0 var(--edge);
 }
 .reel-card {
   width: 280px;
   flex: 0 0 auto;
+  scroll-snap-align: start;
   background: #fff;
   padding: 8px 8px 14px;
   border: 1px solid rgba(49, 104, 135, 0.18);
@@ -1367,25 +1368,48 @@ body:not(.has-overlay-header) main {
   font-size: 0.88rem;
   color: var(--muted);
 }
+.reel-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+.reel-controls.is-hidden {
+  display: none;
+}
+.reel-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--blue);
+  background: #fff;
+  color: var(--blue);
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    opacity 0.25s;
+}
+.reel-btn svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.reel-btn:hover:not(:disabled) {
+  background: var(--blue);
+  color: #fff;
+}
+.reel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
 @media (max-width: 767.98px) {
   .reel-card {
     width: 230px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .work-reel {
-    overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .reel-track {
-    animation: none;
-  }
-  .reel-row[aria-hidden='true'] {
-    display: none;
-  }
-  .reel-row {
-    padding-inline: var(--gutter);
   }
 }
 

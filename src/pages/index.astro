@@ -238,20 +238,24 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
             {home.projects?.text && <p class="work-intro">{home.projects.text}</p>}
           </div>
         </div>
-        <div class="work-reel">
-          <div class="reel-track">
-            {[0, 1].map((copy) => (
-              <ul class="reel-row" aria-hidden={copy === 1 ? 'true' : undefined}>
-                {projects.map((pr) => (
-                  <li class="reel-card">
-                    <img src={pr.image} alt={copy === 0 ? pr.title : ''} width="480" height="360" loading="lazy" />
-                    <span class="reel-title">{pr.title}</span>
-                    {(pr.caption || pr.type) && <span class="reel-sub">{pr.caption || pr.type}</span>}
-                  </li>
-                ))}
-              </ul>
+        <div class="work-reel" role="region" aria-label="Project photos" tabindex="0">
+          <ul class="reel-row">
+            {projects.map((pr) => (
+              <li class="reel-card">
+                <img src={pr.image} alt={pr.title} width="480" height="360" loading="lazy" />
+                <span class="reel-title">{pr.title}</span>
+                {(pr.caption || pr.type) && <span class="reel-sub">{pr.caption || pr.type}</span>}
+              </li>
             ))}
-          </div>
+          </ul>
+        </div>
+        <div class="container reel-controls">
+          <button class="reel-btn" type="button" data-dir="-1" aria-label="Previous projects" disabled>
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+          </button>
+          <button class="reel-btn" type="button" data-dir="1" aria-label="Next projects">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+          </button>
         </div>
       </section>
     )
@@ -466,6 +470,28 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
     card.addEventListener('focusout', (e) => {
       if (!card.contains(e.relatedTarget as Node)) show();
     });
+  }
+
+  // Our Work: the project row only moves when someone clicks the arrows (or swipes / scrolls it).
+  const reel = document.querySelector<HTMLElement>('.work-reel');
+  if (reel) {
+    const btns = [...document.querySelectorAll<HTMLButtonElement>('.reel-btn')];
+    const update = () => {
+      const max = reel.scrollWidth - reel.clientWidth - 2;
+      btns.forEach((b) => (b.disabled = Number(b.dataset.dir) < 0 ? reel.scrollLeft <= 2 : reel.scrollLeft >= max));
+      document.querySelector('.reel-controls')?.classList.toggle('is-hidden', max <= 0);
+    };
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        const card = reel.querySelector<HTMLElement>('.reel-card');
+        const step = card ? card.offsetWidth + 20 : 300;
+        const perView = Math.max(1, Math.floor(reel.clientWidth / step) - 1) * step || step;
+        reel.scrollBy({ left: Number(b.dataset.dir) * perView, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }),
+    );
+    reel.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 
   // Stats: count up from 0 to the number ("55+", "50 States") every time the band scrolls into view.
