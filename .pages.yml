@@ -242,7 +242,7 @@ content:
             type: text
             list: true
       - name: projects
-        label: Our Work (scrolling project photos)
+        label: Our Work (project photos)
         type: object
         fields:
           - name: eyebrow
@@ -257,6 +257,7 @@ content:
             type: text
           - name: slides
             label: Projects
+            description: The first four are shown on the home page. Drag to reorder.
             type: object
             list:
               collapsible:

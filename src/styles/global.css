@@ -1316,45 +1316,37 @@ body:not(.has-overlay-header) main {
     align-items: end;
   }
 }
-/* Project row: a still, horizontally scrollable row of photo cards. It only moves when someone clicks
-   the arrows, swipes, or scrolls it. The first card lines up with the content column. */
-.work-reel {
-  --edge: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--edge);
-  scrollbar-width: none;
-  padding: 4px 0 16px;
-}
-.work-reel::-webkit-scrollbar {
-  display: none;
-}
-.work-reel:focus-visible {
-  outline-offset: -3px;
-}
-.reel-row {
-  display: flex;
+/* Our Work: up to four project photos with titles. One centered row on desktop, two across on
+   tablets, stacked on phones. */
+.work-tiles {
+  display: grid;
   gap: 20px;
-  width: max-content;
-  margin: 0;
-  padding: 0 var(--edge);
+  grid-template-columns: 1fr;
+  margin-block: 0;
 }
-.reel-card {
-  width: 280px;
-  flex: 0 0 auto;
-  scroll-snap-align: start;
+@media (min-width: 600px) {
+  .work-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  .work-tiles {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.work-tile {
   background: #fff;
   padding: 8px 8px 14px;
   border: 1px solid rgba(49, 104, 135, 0.18);
   box-shadow: 0 12px 28px -14px rgba(28, 50, 70, 0.3);
 }
-.reel-card img {
+.work-tile img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   margin-bottom: 12px;
 }
-.reel-title {
+.tile-title {
   display: block;
   padding: 0 6px;
   font-family: var(--font-display);
@@ -1362,55 +1354,11 @@ body:not(.has-overlay-header) main {
   line-height: 1.2;
   color: var(--ink);
 }
-.reel-sub {
+.tile-sub {
   display: block;
   padding: 2px 6px 0;
   font-size: 0.88rem;
   color: var(--muted);
-}
-.reel-controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 8px;
-}
-.reel-controls.is-hidden {
-  display: none;
-}
-.reel-btn {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid var(--blue);
-  background: #fff;
-  color: var(--blue);
-  cursor: pointer;
-  transition:
-    background-color 0.25s,
-    color 0.25s,
-    opacity 0.25s;
-}
-.reel-btn svg {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.reel-btn:hover:not(:disabled) {
-  background: var(--blue);
-  color: #fff;
-}
-.reel-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-@media (max-width: 767.98px) {
-  .reel-card {
-    width: 230px;
-  }
 }
 
 /* ---------- Staff ---------- */
