@@ -59,6 +59,7 @@ h3 {
 }
 p {
   margin: 0 0 1em;
+  text-wrap: pretty; /* avoid orphans and ragged last lines */
 }
 a {
   color: var(--green);
@@ -427,7 +428,7 @@ body:not(.has-overlay-header) main {
   grid-column: 1 / -1;
 }
 .stat-value {
-  font-variant-numeric: lining-nums;
+  font-variant-numeric: lining-nums tabular-nums;
   display: block;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
@@ -1379,4 +1380,58 @@ body:not(.has-overlay-header) main {
 }
 .brand-list a:hover {
   background: var(--bg-soft);
+}
+
+/* ---------- Load animation: hero content rises in, photo settles, stats card follows ---------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0.4;
+    scale: 1.08; /* `scale`, not transform, so it doesn't fight the parallax script */
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #hero .parallax-bg {
+    animation: settle 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  #hero .hero-inner > * {
+    animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  #hero .hero-inner > :nth-child(1) {
+    animation-delay: 0.15s;
+  }
+  #hero .hero-inner > :nth-child(2) {
+    animation-delay: 0.28s;
+  }
+  #hero .hero-inner > :nth-child(3) {
+    animation-delay: 0.42s;
+  }
+  #hero .hero-inner > :nth-child(4) {
+    animation-delay: 0.52s;
+  }
+  #hero .hero-inner > :nth-child(5) {
+    animation-delay: 0.62s;
+  }
+  .stats-list {
+    animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.75s both;
+  }
+}
+
+/* Get In Touch sits on the stone texture; keep the form fields crisp white */
+#contact .contact-form input:not([type='checkbox']),
+#contact .contact-form textarea {
+  background: #fff;
 }
