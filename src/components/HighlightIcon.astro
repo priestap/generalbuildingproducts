@@ -62,7 +62,18 @@ const { name } = Astro.props;
     )
   }
   {
-    !['fabrication', 'certified', 'key', 'ready'].includes(name) && (
+    name === 'stack' && (
+      <>
+        {/* stacked boxes: many product lines, one supplier */}
+        <rect x="8" y="28" width="16" height="14" rx="1.5" />
+        <rect x="24" y="28" width="16" height="14" rx="1.5" />
+        <rect x="16" y="14" width="16" height="14" rx="1.5" />
+        <path d="M13 35h6M29 35h6M21 21h6" />
+      </>
+    )
+  }
+  {
+    !['fabrication', 'certified', 'key', 'ready', 'stack'].includes(name) && (
       <>
         <circle cx="24" cy="24" r="16" />
         <path d="M17 24l5 5 9-10" />

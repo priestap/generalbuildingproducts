@@ -14,8 +14,6 @@ import { slugify, uniqueBrandNames } from '../lib/slug';
 
 import heroImg from '../assets/hero.jpg';
 import aboutImg from '../assets/about.jpg';
-import historyMuseum from '../assets/history-toledo-museum-of-art.jpg';
-import historyField from '../assets/history-fifth-third-field.jpg';
 
 // Background images can't use <Image>, so optimize them here and pass the URLs to CSS.
 const heroBg = await getImage({ src: heroImg, width: 1800, format: 'webp', quality: 72 });
@@ -34,10 +32,7 @@ const categoryTiles = products.filter((c) => {
 const brands = uniqueBrandNames(products);
 const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(`${site.street}, ${site.cityStateZip}`)}&z=15&output=embed`;
 
-const history = [
-  { src: historyMuseum, alt: 'Toledo Museum of Art' },
-  { src: historyField, alt: 'Fifth Third Field, Toledo' },
-];
+const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
 ---
 
 <Base overlayHeader>
@@ -73,20 +68,34 @@ const history = [
     )
   }
 
-  <section id="service" class="section texture text-center">
-    <div class="container">
-      <p class="smallcaps">Services We Offer</p>
-      <h2 class="section-title">What We Do</h2>
-      <ul class="services">
+  <section id="service" class="section texture services-section">
+    <div class="container services-layout">
+      <div class="services-intro">
+        <p class="smallcaps">{home.servicesIntro?.eyebrow ?? 'Services We Offer'}</p>
+        <h2 class="section-title">{home.servicesIntro?.heading ?? 'What We Do'}</h2>
+        {home.servicesIntro?.text && <p>{home.servicesIntro.text}</p>}
+      </div>
+      <ul class="services-grid">
         {
           home.services.map((s) => (
-            <li class="service">
-              {s.icon && <img src={s.icon} alt="" width="60" height="60" loading="lazy" />}
-              <h3>{s.title}</h3>
-              <p>{s.description}</p>
+            <li class="service-item">
+              <span class="service-icon">
+                {s.icon && <img src={s.icon} alt="" width="40" height="40" loading="lazy" />}
+              </span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.description}</p>
+              </div>
             </li>
           ))
         }
+        <li class="service-item service-cta">
+          <div>
+            <h3>{home.servicesCta?.heading ?? 'Not sure what you need?'}</h3>
+            {home.servicesCta?.text && <p>{home.servicesCta.text}</p>}
+            <a class="service-phone" href={telUrl(site.phone)}>{site.phone}</a>
+          </div>
+        </li>
       </ul>
     </div>
   </section>
@@ -153,27 +162,48 @@ const history = [
   }
 
   <section id="about" class="about-split">
-    <div class="about-image" style={`--bg: url('${aboutBg.src}')`} role="img" aria-label="Building facade"></div>
+    <figure class="about-image" style={`--bg: url('${aboutBg.src}')`}>
+      <span class="since-badge" aria-hidden="true"><small>Since</small>1968</span>
+      {home.about?.photoCaption && <figcaption>{home.about.photoCaption}</figcaption>}
+    </figure>
     <div class="about-content">
-      <p class="smallcaps">Who We Are</p>
-      <h2 class="section-title">About Us</h2>
-      {about.paragraphs.map((p) => <p>{p}</p>)}
+      <p class="smallcaps">{home.about?.eyebrow ?? 'Who We Are'}</p>
+      <h2 class="section-title">{home.about?.heading ?? 'About Us'}</h2>
+      {(home.about?.paragraphs ?? about.paragraphs).map((p, i) => <p class:list={{ 'about-lead': i === 0 }}>{p}</p>)}
+      <a class="btn btn-outline" href="/about-us/">{home.about?.linkLabel ?? 'More about us'}</a>
     </div>
   </section>
 
-  <section id="history" class="history" aria-roledescription="carousel" aria-label="Our work">
-    <div class="history-track" tabindex="0">
-      {
-        history.map((h, i) => (
-          <figure class="history-slide" aria-roledescription="slide" aria-label={`${i + 1} of ${history.length}`}>
-            <Image src={h.src} alt={h.alt} widths={[600, 1200]} sizes="100vw" quality={75} loading="lazy" />
-          </figure>
-        ))
-      }
-    </div>
-    <button class="history-btn prev" type="button" aria-label="Previous slide">‹</button>
-    <button class="history-btn next" type="button" aria-label="Next slide">›</button>
-  </section>
+  {
+    slides.length > 0 && (
+      <section id="history" class="history" aria-roledescription="carousel" aria-label={home.projects?.eyebrow ?? 'Around Toledo'}>
+        <div class="history-track" tabindex="0">
+          {slides.map((sl, i) => (
+            <figure class="history-slide" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`}>
+              <img src={sl.image} alt={sl.title ?? ''} width="1200" height="560" loading="lazy" />
+              {(sl.title || sl.caption) && (
+                <figcaption class="history-caption">
+                  {home.projects?.eyebrow && <span class="history-eyebrow">{home.projects.eyebrow}</span>}
+                  {sl.title && <span class="history-title">{sl.title}</span>}
+                  {sl.caption && <span class="history-sub">{sl.caption}</span>}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+        {slides.length > 1 && (
+          <>
+            <button class="history-btn prev" type="button" aria-label="Previous slide">‹</button>
+            <button class="history-btn next" type="button" aria-label="Next slide">›</button>
+            <div class="history-dots" aria-hidden="true">
+              {slides.map((_, i) => <span class:list={{ active: i === 0 }} />)}
+            </div>
+          </>
+        )}
+      </section>
+    )
+  }
+
 
   {showStaff && (
   <section id="staff" class="section dark text-center">
@@ -316,5 +346,16 @@ const history = [
       if (e.key === 'ArrowLeft') go(-1);
       if (e.key === 'ArrowRight') go(1);
     });
+    const dots = [...document.querySelectorAll<HTMLElement>('.history-dots span')];
+    if (dots.length) {
+      track.addEventListener(
+        'scroll',
+        () => {
+          const i = Math.round(track.scrollLeft / track.clientWidth);
+          dots.forEach((d, j) => d.classList.toggle('active', j === i));
+        },
+        { passive: true },
+      );
+    }
   }
 </script>

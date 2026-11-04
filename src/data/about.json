@@ -1,12 +1,16 @@
 {
-  "subtitle": "Over 55 years in the commercial door/hardware industry.",
+  "subtitle": "Commercial doors, frames, and hardware since 1968.",
   "paragraphs": [
-    "Founded in 1968, General Building Products has over 55 years in the commercial door/hardware industry. We offer a full line of commercial doors/frames, and all the associated hardware.",
-    "We have a complete hollow metal and door fabrication shop, where we can customize a solution for your unique situation.",
-    "Our staff includes a bonded locksmith as well as an AHC certified consultant."
+    "General Building Products was founded in 1968. More than 55 years later, we still offer a full line of commercial doors and frames, plus all the hardware that goes with them.",
+    "Our complete hollow metal and door fabrication shop lets us build or modify to fit your unique situation, and we install hardware in-house before anything leaves our building.",
+    "Our staff includes a bonded locksmith and an AHC certified consultant, so you get expert help with everything from keying to hardware specifications."
   ],
   "ownersHeading": "",
   "owners": [
-    { "name": "Phil Bass", "title": "Owner, Sales, Service", "photo": "/images/staff/phil-bass.jpg" }
+    {
+      "name": "Phil Bass",
+      "title": "Owner, Sales, Service",
+      "photo": "/images/staff/phil-bass.jpg"
+    }
   ]
 }
