@@ -1,0 +1,72 @@
+---
+/** Line icons for the "Why General Building Products" row. Chosen by name in the CMS. */
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+---
+
+<svg
+  class="highlight-icon"
+  viewBox="0 0 48 48"
+  width="48"
+  height="48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {
+    name === 'fabrication' && (
+      <>
+        {/* door in a frame, with a welding spark */}
+        <path d="M10 42V8h22v34" />
+        <path d="M6 42h30" />
+        <path d="M14 42V12h14v30" />
+        <circle cx="25" cy="27" r="1.4" fill="currentColor" />
+        <path d="M40 10l-3 3M42 16h-4M36 6v4" />
+      </>
+    )
+  }
+  {
+    name === 'certified' && (
+      <>
+        {/* rosette badge */}
+        <circle cx="24" cy="19" r="11" />
+        <path d="M19.5 19l3 3 6-6" />
+        <path d="M17 28.5L14 42l10-5 10 5-3-13.5" />
+      </>
+    )
+  }
+  {
+    name === 'key' && (
+      <>
+        <circle cx="15" cy="24" r="8" />
+        <circle cx="15" cy="24" r="2.5" />
+        <path d="M23 24h19M36 24v6M41 24v5" />
+      </>
+    )
+  }
+  {
+    name === 'ready' && (
+      <>
+        {/* door with lever handle and check */}
+        <rect x="10" y="6" width="22" height="36" rx="1.5" />
+        <path d="M26 25h-5" />
+        <circle cx="26" cy="25" r="1.6" fill="currentColor" />
+        <circle cx="36" cy="36" r="8" fill="var(--icon-bg, #fff)" />
+        <path d="M32.5 36l2.5 2.5 4.5-5" />
+      </>
+    )
+  }
+  {
+    !['fabrication', 'certified', 'key', 'ready'].includes(name) && (
+      <>
+        <circle cx="24" cy="24" r="16" />
+        <path d="M17 24l5 5 9-10" />
+      </>
+    )
+  }
+</svg>

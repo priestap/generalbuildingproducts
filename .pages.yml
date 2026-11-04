@@ -129,6 +129,58 @@ content:
             label: Paragraphs
             type: text
             list: true
+      - name: stats
+        label: Numbers band (under the top banner)
+        description: Short values work best, like "1968" or "55+".
+        type: object
+        list:
+          max: 5
+          collapsible:
+            collapsed: true
+            summary: "{value} {label}"
+        fields:
+          - name: value
+            label: Number or short value
+            type: string
+            required: true
+          - name: label
+            label: Label
+            type: string
+            required: true
+      - name: highlights
+        label: Why choose us (dark section)
+        type: object
+        fields:
+          - name: eyebrow
+            label: Small line above the heading
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: items
+            label: Reasons
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - name: icon
+                label: Icon
+                type: select
+                options:
+                  values:
+                    - { value: fabrication, label: Fabrication shop (door and frame) }
+                    - { value: certified, label: Certified (badge) }
+                    - { value: key, label: Key }
+                    - { value: ready, label: Door with check mark }
+              - name: title
+                label: Title
+                type: string
+                required: true
+              - name: description
+                label: Description
+                type: text
       - name: services
         label: Services
         type: object
@@ -206,6 +258,14 @@ content:
       - name: phone
         label: Phone
         type: string
+      - name: fax
+        label: Fax
+        type: string
+      - name: hours
+        label: Business hours
+        description: One line each, for example "Mon–Fri 7:30am – 4:30pm". Leave empty to hide.
+        type: string
+        list: true
       - name: email
         label: Email shown on the site
         description: This does not change where contact form messages are delivered (see the editing guide).

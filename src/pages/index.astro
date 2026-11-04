@@ -2,12 +2,15 @@
 import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
+import HighlightIcon from '../components/HighlightIcon.astro';
 import site from '../data/site.json';
 import home from '../data/home.json';
 import about from '../data/about.json';
 import staff from '../data/staff.json';
 import testimonials from '../data/testimonials.json';
+import products from '../data/products.json';
 import { mapsUrl, telUrl } from '../lib/url';
+import { slugify, uniqueBrandNames } from '../lib/slug';
 
 import heroImg from '../assets/hero.jpg';
 import aboutImg from '../assets/about.jpg';
@@ -20,6 +23,16 @@ const heroBgSmall = await getImage({ src: heroImg, width: 900, format: 'webp', q
 const aboutBg = await getImage({ src: aboutImg, width: 975, format: 'webp', quality: 75 });
 
 const { showStaff = false, showTestimonials = false } = home.sections ?? {};
+
+// Categories sharing a photo (e.g. Misc. and Lockers) would look repetitive as tiles, so show each photo once.
+const seenImages = new Set<string>();
+const categoryTiles = products.filter((c) => {
+  if (!c.image || seenImages.has(c.image)) return false;
+  seenImages.add(c.image);
+  return true;
+});
+const brands = uniqueBrandNames(products);
+const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(`${site.street}, ${site.cityStateZip}`)}&z=15&output=embed`;
 
 const history = [
   { src: historyMuseum, alt: 'Toledo Museum of Art' },
@@ -38,9 +51,27 @@ const history = [
       <p class="eyebrow">{home.hero.eyebrow}</p>
       <h1>{home.hero.heading}</h1>
       {home.hero.paragraphs.map((p) => <p>{p}</p>)}
-      <a class="btn btn-primary" href="#contact">Contact Us</a>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Contact Us</a>
+        <a class="btn btn-ghost" href="/products/">Browse Products</a>
+      </div>
     </div>
   </section>
+
+  {
+    home.stats?.length > 0 && (
+      <section class="stats" aria-label="General Building Products at a glance">
+        <ul class="container stats-list">
+          {home.stats.map((s) => (
+            <li>
+              <span class="stat-value">{s.value}</span>
+              <span class="stat-label">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   <section id="service" class="section texture text-center">
     <div class="container">
@@ -59,6 +90,67 @@ const history = [
       </ul>
     </div>
   </section>
+
+  {
+    home.highlights?.items?.length > 0 && (
+      <section id="why" class="section why">
+        <div class="container">
+          <div class="why-head">
+            <p class="smallcaps">{home.highlights.eyebrow}</p>
+            <h2 class="section-title">{home.highlights.heading}</h2>
+          </div>
+          <ul class="why-list">
+            {home.highlights.items.map((h) => (
+              <li class="why-item">
+                <span class="why-icon">
+                  <HighlightIcon name={h.icon} />
+                </span>
+                <h3>{h.title}</h3>
+                <p>{h.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section id="supply" class="section supply text-center">
+    <div class="container">
+      <p class="smallcaps">Our Products</p>
+      <h2 class="section-title">What We Supply</h2>
+      <ul class="tile-grid">
+        {
+          categoryTiles.map((c) => (
+            <li>
+              <a class="tile" href={`/products/#${slugify(c.category)}`}>
+                <img src={c.image} alt="" width="400" height="270" loading="lazy" />
+                <span>{c.category}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="btn btn-outline" href="/products/">See all {products.length} product categories</a>
+    </div>
+  </section>
+
+  {
+    brands.length > 0 && (
+      <section class="brands" aria-label="Manufacturers we carry">
+        <p class="brands-label">Manufacturers we carry</p>
+        <div class="marquee">
+          {[0, 1].map((copy) => (
+            <ul class="marquee-row" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {brands.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   <section id="about" class="about-split">
     <div class="about-image" style={`--bg: url('${aboutBg.src}')`} role="img" aria-label="Building facade"></div>
@@ -136,16 +228,39 @@ const history = [
       </div>
       <div class="contact-grid">
         <ContactForm />
-        <address class="contact-details">
-          <p><b>Tel:</b> <a href={telUrl(site.phone)}>{site.phone}</a></p>
-          <p><b>E-Mail:</b> <a href={`mailto:${site.email}`}>{site.email}</a></p>
-          <h3>Address:</h3>
-          <p>
-            <a href={mapsUrl(site.street, site.cityStateZip)}>
+        <div class="contact-side">
+          <address class="contact-details">
+            <p><b>Tel:</b> <a href={telUrl(site.phone)}>{site.phone}</a></p>
+            {site.fax && <p><b>Fax:</b> {site.fax}</p>}
+            <p><b>E-Mail:</b> <a href={`mailto:${site.email}`}>{site.email}</a></p>
+            <h3>Visit us:</h3>
+            <p>
               {site.street}<br />{site.cityStateZip}
-            </a>
-          </p>
-        </address>
+            </p>
+            {
+              site.hours?.length > 0 && (
+                <>
+                  <h3>Hours:</h3>
+                  <ul class="hours">
+                    {site.hours.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                </>
+              )
+            }
+          </address>
+          <div class="map">
+            <iframe
+              src={mapEmbed}
+              title={`Map of ${site.street}, ${site.cityStateZip}`}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <a class="directions" href={mapsUrl(site.street, site.cityStateZip)} target="_blank" rel="noopener">
+            Get directions →
+          </a>
+        </div>
       </div>
     </div>
   </section>

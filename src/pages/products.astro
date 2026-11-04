@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import products from '../data/products.json';
 import { normalizeUrl } from '../lib/url';
+import { slugify } from '../lib/slug';
 
 const subtitle = 'General Building Products is committed to bringing you the highest quality products available.';
 ---
@@ -16,7 +17,7 @@ const subtitle = 'General Building Products is committed to bringing you the hig
     <ul class="container product-grid">
       {
         products.map((c) => (
-          <li class="product-card">
+          <li class="product-card" id={slugify(c.category)}>
             <div class="product-card-head">
               {c.image && <img src={c.image} alt="" width="400" height="270" loading="lazy" />}
               <h2>{c.category}</h2>

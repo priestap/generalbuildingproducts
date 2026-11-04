@@ -12,10 +12,44 @@
       "We offer shipping to all 50 states and Canada. (includes Alaska & Hawaii)"
     ]
   },
+  "stats": [
+    { "value": "1968", "label": "Founded in Toledo" },
+    { "value": "55+", "label": "Years in business" },
+    { "value": "35+", "label": "Manufacturers carried" },
+    { "value": "OH · MI · IN", "label": "Local service area" },
+    { "value": "50 States", "label": "Plus Canada, shipped to" }
+  ],
   "services": [
     { "title": "Installation", "description": "Installation of hardware prior to delivery", "icon": "/images/icons/installation.svg" },
+    { "title": "Service Calls", "description": "Service calls and on-site estimates", "icon": "/images/icons/service-calls.svg" },
     { "title": "Delivery", "description": "Delivery within specified area", "icon": "/images/icons/delivery.svg" },
     { "title": "Shipping", "description": "Shipping outside delivery area", "icon": "/images/icons/shipping.svg" },
     { "title": "Custom Solutions", "description": "Custom solutions for unique situations", "icon": "/images/icons/custom-solutions.svg" }
-  ]
+  ],
+  "highlights": {
+    "eyebrow": "Why General Building Products",
+    "heading": "Expertise you won't find at a big‑box store",
+    "items": [
+      {
+        "icon": "fabrication",
+        "title": "In-house fabrication shop",
+        "description": "Our complete hollow metal and door fabrication shop lets us customize a solution for your unique situation."
+      },
+      {
+        "icon": "certified",
+        "title": "AHC certified consultant",
+        "description": "An Architectural Hardware Consultant on staff helps get the right hardware specified for your openings."
+      },
+      {
+        "icon": "key",
+        "title": "Bonded locksmith",
+        "description": "A bonded locksmith on our team handles keying, lock work, and security hardware."
+      },
+      {
+        "icon": "ready",
+        "title": "Hardware installed before delivery",
+        "description": "Doors arrive with hardware already installed, so they're ready to hang when they reach the job site."
+      }
+    ]
+  }
 }

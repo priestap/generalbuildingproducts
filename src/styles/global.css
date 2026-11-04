@@ -359,11 +359,112 @@ body:not(.has-overlay-header) main {
   margin-top: 1em;
 }
 
+/* ---------- Hero buttons ---------- */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1em;
+}
+#hero .hero-actions .btn {
+  margin-top: 0;
+}
+.btn-ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+}
+.btn-ghost:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+
+/* ---------- Stats band (card overlapping the bottom of the hero) ---------- */
+.stats {
+  position: relative;
+  z-index: 2;
+  margin-top: -56px;
+  margin-bottom: -40px; /* let the card overlap into the services texture too */
+}
+/* continue the services texture behind the part of the card below the hero */
+.stats::before {
+  content: '';
+  position: absolute;
+  inset: 56px 0 0;
+  z-index: -1;
+  background-color: var(--bg-soft);
+  background-image: url('../assets/rockywall.png');
+}
+/* room under the hero buttons for the card to overlap */
+#hero:has(+ .stats) .hero-inner {
+  padding-bottom: 116px;
+}
+@media (min-width: 768px) {
+  #hero:has(+ .stats) .hero-inner {
+    padding-bottom: 170px;
+  }
+}
+.stats-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 20px 50px rgba(28, 32, 40, 0.18);
+  border-top: 4px solid var(--gold);
+  padding: 8px 0;
+  max-width: calc(var(--container) - 2 * var(--gutter));
+  width: calc(100% - 2 * var(--gutter));
+}
+.stats-list li {
+  padding: 18px 16px;
+  text-align: center;
+}
+.stats-list li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--blue);
+  white-space: nowrap;
+}
+.stat-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (min-width: 900px) {
+  .stats-list {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-auto-flow: column;
+    padding: 12px 0;
+  }
+  .stats-list li {
+    padding: 22px 12px;
+  }
+  .stats-list li + li {
+    border-left: 1px solid #e8e8e8;
+  }
+  .stats-list li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+.stats + #service {
+  padding-top: 96px;
+}
+
 /* ---------- Services ---------- */
 .services {
   display: grid;
   gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 .service img {
   width: 60px;
@@ -378,6 +479,193 @@ body:not(.has-overlay-header) main {
 }
 .service p {
   opacity: 0.75;
+}
+
+/* ---------- Why GBP (credentials) ---------- */
+.why {
+  background: var(--dark);
+  color: #d9dbe0;
+  --icon-bg: var(--dark);
+}
+.why-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 8px;
+}
+.why .smallcaps {
+  color: var(--gold-light, #c9b866);
+}
+.why .section-title {
+  color: #fff;
+}
+.why-list {
+  display: grid;
+  gap: 36px 32px;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+.why-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 184, 102, 0.55);
+  color: #c9b866;
+  margin-bottom: 18px;
+}
+.why-item h3 {
+  color: #fff;
+  font-size: 1.45rem;
+  margin-bottom: 0.4em;
+}
+.why-item p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* ---------- What we supply (category tiles) ---------- */
+.supply {
+  background: #fff;
+}
+.tile-grid {
+  --cols: 2;
+  --gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* a short last row stays centered */
+  gap: var(--gap);
+  margin-bottom: 40px;
+}
+.tile-grid > li {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+}
+/* phones and tablets: a taste of the catalog, the button leads to the rest */
+@media (max-width: 899.98px) {
+  .tile-grid > li:nth-child(n + 9) {
+    display: none;
+  }
+}
+@media (min-width: 600px) {
+  .tile-grid {
+    --cols: 4;
+  }
+}
+.tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--dark);
+  color: #fff;
+  text-decoration: none;
+}
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17, 20, 26, 0.85) 0%, rgba(17, 20, 26, 0.15) 60%, transparent 100%);
+}
+.tile span {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 1;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+.tile:hover {
+  color: #fff;
+}
+.tile:hover img,
+.tile:focus-visible img {
+  transform: scale(1.07);
+}
+@media (min-width: 900px) {
+  .tile-grid {
+    --cols: 6;
+    --gap: 14px;
+  }
+}
+
+/* ---------- Brands marquee ---------- */
+.brands {
+  background-color: var(--bg-soft);
+  background-image: url('../assets/rockywall.png');
+  border-block: 1px solid #e6e6e6;
+  padding: 28px 0 30px;
+  overflow: hidden;
+}
+.brands-label {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 70s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+.marquee-row {
+  display: flex;
+  flex-shrink: 0;
+}
+.marquee-row li {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: #4a4f58;
+  white-space: nowrap;
+  padding: 0 22px;
+  position: relative;
+}
+.marquee-row li::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+    width: auto;
+    justify-content: center;
+  }
+  .marquee-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+    padding-inline: var(--gutter);
+  }
+  .marquee-row[aria-hidden='true'] {
+    display: none;
+  }
 }
 
 /* ---------- About split ---------- */
@@ -609,6 +897,33 @@ body:not(.has-overlay-header) main {
 }
 .contact-details p {
   margin: 0 0 0.25em;
+}
+.hours {
+  margin: 0;
+}
+.map {
+  margin-top: 20px;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #e9ecef;
+  border: 1px solid #dee2e6;
+}
+.map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.directions {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* products page: leave room for the fixed header when jumping to a category */
+.product-card {
+  scroll-margin-top: 80px;
 }
 
 /* ---------- Footer ---------- */
