@@ -221,9 +221,6 @@ content:
             description: The first paragraph is shown slightly larger.
             type: text
             list: true
-          - name: photoCaption
-            label: Building photo caption
-            type: string
           - name: linkLabel
             label: Button label
             type: string

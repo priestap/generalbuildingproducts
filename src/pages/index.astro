@@ -3,6 +3,7 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
 import HighlightIcon from '../components/HighlightIcon.astro';
+import DoorBlueprint from '../components/DoorBlueprint.astro';
 import site from '../data/site.json';
 import home from '../data/home.json';
 import about from '../data/about.json';
@@ -13,12 +14,10 @@ import { mapsUrl, telUrl } from '../lib/url';
 import { slugify, uniqueBrandNames } from '../lib/slug';
 
 import heroImg from '../assets/hero.jpg';
-import aboutImg from '../assets/about.jpg';
 
 // Background images can't use <Image>, so optimize them here and pass the URLs to CSS.
 const heroBg = await getImage({ src: heroImg, width: 1800, format: 'webp', quality: 72 });
 const heroBgSmall = await getImage({ src: heroImg, width: 900, format: 'webp', quality: 70 });
-const aboutBg = await getImage({ src: aboutImg, width: 975, format: 'webp', quality: 75 });
 
 const { showStaff = false, showTestimonials = false } = home.sections ?? {};
 
@@ -161,16 +160,18 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     )
   }
 
-  <section id="about" class="about-split">
-    <figure class="about-image" style={`--bg: url('${aboutBg.src}')`}>
-      <span class="since-badge" aria-hidden="true"><small>Since</small>1968</span>
-      {home.about?.photoCaption && <figcaption>{home.about.photoCaption}</figcaption>}
-    </figure>
+  <section id="about" class="section">
+    <div class="container about-intro">
+      <div class="about-art">
+        <div class="blueprint-panel"><DoorBlueprint /></div>
+        <span class="since-badge" aria-hidden="true"><small>Since</small>1968</span>
+      </div>
     <div class="about-content">
       <p class="smallcaps">{home.about?.eyebrow ?? 'Who We Are'}</p>
       <h2 class="section-title">{home.about?.heading ?? 'About Us'}</h2>
       {(home.about?.paragraphs ?? about.paragraphs).map((p, i) => <p class:list={{ 'about-lead': i === 0 }}>{p}</p>)}
       <a class="btn btn-outline" href="/about-us/">{home.about?.linkLabel ?? 'More about us'}</a>
+    </div>
     </div>
   </section>
 

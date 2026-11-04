@@ -1,0 +1,100 @@
+---
+/**
+ * Decorative blueprint-style elevation of a hollow metal door and frame,
+ * drawn in SVG (no image file). Lines use currentColor.
+ */
+---
+
+<svg class="door-blueprint" viewBox="0 0 300 400" role="img" aria-label="Blueprint drawing of a commercial door and frame">
+  <defs>
+    <pattern id="bp-grid-fine" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M10 0H0V10" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.18"></path>
+    </pattern>
+    <pattern id="bp-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#bp-grid-fine)"></rect>
+      <path d="M50 0H0V50" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.28"></path>
+    </pattern>
+  </defs>
+
+  <rect width="300" height="400" fill="url(#bp-grid)"></rect>
+
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <!-- title block -->
+    <text x="20" y="26" class="bp-text bp-title">DOOR TYPE A</text>
+    <text x="20" y="38" class="bp-text">HOLLOW METAL DOOR &amp; FRAME</text>
+
+    <!-- floor line -->
+    <path d="M30 352H270" stroke-width="1.2"></path>
+    <path d="M30 352l-6 8M42 352l-6 8M54 352l-6 8M246 352l-6 8M258 352l-6 8M270 352l-6 8" stroke-width="0.6" opacity="0.6"></path>
+
+    <!-- frame: outer face and opening -->
+    <path d="M64 352V56H236V352" stroke-width="1.6"></path>
+    <path d="M78 352V70H222V352" stroke-width="1.2"></path>
+
+    <!-- door leaf -->
+    <rect x="82" y="74" width="136" height="276" stroke-width="1.4"></rect>
+
+    <!-- vision lite with glass hatching -->
+    <rect x="104" y="104" width="44" height="96" stroke-width="1.1"></rect>
+    <rect x="108" y="108" width="36" height="88" stroke-width="0.6" opacity="0.7"></rect>
+    <path d="M114 150l22-22M114 170l30-30M122 182l22-22" stroke-width="0.6" opacity="0.6"></path>
+
+    <!-- hinges -->
+    <rect x="79" y="96" width="5" height="18" stroke-width="0.9"></rect>
+    <rect x="79" y="200" width="5" height="18" stroke-width="0.9"></rect>
+    <rect x="79" y="304" width="5" height="18" stroke-width="0.9"></rect>
+
+    <!-- closer and arm -->
+    <rect x="96" y="80" width="54" height="12" rx="2" stroke-width="1"></rect>
+    <path d="M150 86l34-10 26 4" stroke-width="1"></path>
+    <circle cx="210" cy="80" r="2.2" stroke-width="0.8"></circle>
+
+    <!-- lever trim -->
+    <rect x="199" y="204" width="10" height="34" rx="2" stroke-width="0.9"></rect>
+    <circle cx="204" cy="214" r="3.2" stroke-width="0.9"></circle>
+    <path d="M204 214H182" stroke-width="2.2"></path>
+    <circle cx="204" cy="230" r="2" stroke-width="0.8"></circle>
+
+    <!-- kick plate -->
+    <rect x="86" y="322" width="128" height="24" stroke-width="0.7" opacity="0.7"></rect>
+
+    <!-- swing indication: dashed lines from the strike side meeting at the hinge side (elevation convention) -->
+    <path d="M218 74L82 212L218 350" stroke-width="0.7" stroke-dasharray="4 4" opacity="0.5"></path>
+
+    <!-- width dimension -->
+    <path d="M78 374H222M78 368v12M222 368v12" stroke-width="0.8"></path>
+    <path d="M74 378l8-8M218 378l8-8" stroke-width="0.8"></path>
+    <text x="150" y="392" text-anchor="middle" class="bp-text bp-dim">3'-0"</text>
+
+    <!-- height dimension -->
+    <path d="M254 70V352M248 70h12M248 352h12" stroke-width="0.8"></path>
+    <path d="M250 74l8-8M250 356l8-8" stroke-width="0.8"></path>
+    <text x="268" y="214" text-anchor="middle" class="bp-text bp-dim" transform="rotate(-90 268 214)">7'-0"</text>
+  </g>
+</svg>
+
+<style>
+  .door-blueprint {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .bp-text {
+    fill: currentColor;
+    stroke: none;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+  }
+  .bp-title {
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 1;
+  }
+  .bp-dim {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 1;
+  }
+</style>
