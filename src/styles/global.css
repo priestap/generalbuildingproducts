@@ -11,7 +11,7 @@
   --bg-soft: #f9f9f9;
   --overlay: linear-gradient(to bottom, rgba(171, 158, 122, 0.6) 0%, rgba(11, 39, 80, 0.6) 100%);
   --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-display: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
   --container: 1140px;
   --gutter: 16px;
   --header-h: 76px;
@@ -50,9 +50,10 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 1.15;
+  font-weight: 600;
+  line-height: 1.1;
   margin: 0 0 0.5em;
+  text-wrap: balance; /* no single-word last lines */
 }
 p {
   margin: 0 0 1em;
@@ -159,15 +160,16 @@ ul {
   }
 }
 .smallcaps {
-  font-size: 14px;
+  font-family: var(--font-display);
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 0.4em;
 }
 .section-title {
-  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-size: clamp(2.4rem, 5.5vw, 3.3rem);
   color: var(--blue);
   margin-bottom: 40px;
 }
@@ -343,13 +345,18 @@ body:not(.has-overlay-header) main {
   }
 }
 #hero .eyebrow {
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-size: 19px;
   font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-wrap: balance;
   margin-bottom: 0.6em;
 }
 #hero h1 {
-  font-size: clamp(2.5rem, 6vw, 3.7rem);
-  line-height: 1.05;
+  font-size: clamp(2.8rem, 7vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1;
   margin-bottom: 0.6em;
 }
 #hero p {
@@ -426,7 +433,8 @@ body:not(.has-overlay-header) main {
 .stat-value {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  font-weight: 600;
+  font-size: clamp(2rem, 3.8vw, 2.8rem);
   line-height: 1.1;
   color: var(--blue);
   white-space: nowrap;
@@ -522,8 +530,8 @@ body:not(.has-overlay-header) main {
 .service-cta h3 {
   color: #fff;
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.45rem;
+  font-weight: 600;
+  font-size: 1.6rem;
 }
 .service-cta p {
   color: rgba(255, 255, 255, 0.85);
@@ -592,7 +600,7 @@ body:not(.has-overlay-header) main {
 }
 .why-item h3 {
   color: #fff;
-  font-size: 1.45rem;
+  font-size: 1.6rem;
   margin-bottom: 0.4em;
 }
 .why-item p {
@@ -706,7 +714,9 @@ body:not(.has-overlay-header) main {
 }
 .marquee-row li {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-weight: 600;
+  font-size: 1.7rem;
+  letter-spacing: 0.02em;
   color: #4a4f58;
   white-space: nowrap;
   padding: 0 22px;
@@ -780,7 +790,8 @@ body:not(.has-overlay-header) main {
   background: var(--gold);
   color: #fff;
   font-family: var(--font-display);
-  font-size: 1.9rem;
+  font-weight: 700;
+  font-size: 2.1rem;
   line-height: 1;
   text-align: center;
   box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.35), 0 10px 24px rgba(0, 0, 0, 0.25);
@@ -881,7 +892,8 @@ body:not(.has-overlay-header) main {
 .history-title {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.6vw, 3rem);
   line-height: 1.1;
 }
 .history-sub {
@@ -1022,8 +1034,9 @@ body:not(.has-overlay-header) main {
   padding: 28px;
 }
 .testimonial p {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.3rem;
   line-height: 1.35;
 }
 .testimonial footer {
@@ -1233,7 +1246,8 @@ body:not(.has-overlay-header) main {
 .owner-name {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.45rem;
+  font-weight: 600;
+  font-size: 1.6rem;
   color: var(--blue);
 }
 .owner-title {
