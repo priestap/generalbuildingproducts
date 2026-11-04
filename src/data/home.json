@@ -106,12 +106,12 @@
     "linkLabel": "More about us"
   },
   "projects": {
-    "eyebrow": "Around Toledo",
+    "eyebrow": "Our Work",
     "slides": [
       {
         "image": "/images/projects/toledo-museum-of-art.jpg",
         "title": "Toledo Museum of Art",
-        "caption": "Center for the Visual Arts"
+        "caption": "Toledo, Ohio"
       },
       {
         "image": "/images/projects/fifth-third-field.jpg",
