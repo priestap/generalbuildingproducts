@@ -58,7 +58,7 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
         <ul class="container stats-list">
           {home.stats.map((s) => (
             <li>
-              {/^\d+\+?$/.test(s.value) ? (
+              {/^\d+/.test(s.value) ? (
                 <>
                   <span class="stat-value" data-count={s.value} aria-hidden="true">{s.value}</span>
                   <span class="sr-only">{s.value}</span>
@@ -261,8 +261,9 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
   <section id="contact" class="section texture">
     <div class="container">
       <div class="text-center">
-        <p class="smallcaps">Write to us today</p>
-        <h2 class="section-title">Get In Touch</h2>
+        <p class="smallcaps">{home.contactIntro?.eyebrow ?? 'Write to us today'}</p>
+        <h2 class="section-title">{home.contactIntro?.heading ?? 'Get In Touch'}</h2>
+        {home.contactIntro?.text && <p class="contact-intro">{home.contactIntro.text}</p>}
       </div>
       <div class="contact-grid">
         <ContactForm />
@@ -338,36 +339,53 @@ const slides = (home.projects?.slides ?? []).filter((sl) => sl.image);
     reduceMotion.addEventListener('change', update);
   }
 
-  // Stats: count up from 0 to the number (e.g. "55+") quickly when the band scrolls into view.
+  // Stats: count up from 0 to the number ("55+", "50 States") every time the band scrolls into view.
   const counters = [...document.querySelectorAll<HTMLElement>('.stat-value[data-count]')];
   if (counters.length && !reduceMotion.matches && 'IntersectionObserver' in window) {
     const DURATION = 700; // ms
-    const run = (el: HTMLElement) => {
+    const parts = (el: HTMLElement) => {
       const [, num, suffix] = el.dataset.count!.match(/^(\d+)(.*)$/)!;
-      const target = Number(num);
+      return { target: Number(num), suffix };
+    };
+    const timers = new Map<HTMLElement, number>();
+    const frames = new Map<HTMLElement, number>();
+    const stop = (el: HTMLElement) => {
+      clearTimeout(timers.get(el));
+      cancelAnimationFrame(frames.get(el) ?? 0);
+    };
+    const reset = (el: HTMLElement) => {
+      stop(el);
+      el.textContent = `0${parts(el).suffix}`;
+    };
+    const run = (el: HTMLElement) => {
+      stop(el);
+      const { target, suffix } = parts(el);
       const start = performance.now();
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / DURATION);
         const eased = 1 - Math.pow(1 - t, 3); // ease-out: fast start, gentle landing
         el.textContent = `${Math.round(target * eased)}${suffix}`;
-        if (t < 1) requestAnimationFrame(tick);
+        if (t < 1) frames.set(el, requestAnimationFrame(tick));
       };
-      requestAnimationFrame(tick);
+      frames.set(el, requestAnimationFrame(tick));
     };
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          io.unobserve(entry.target);
-          // On first load the stats card is still rising in (CSS delay ~0.75s); wait so the count is visible.
-          const wait = Math.max(0, 1050 - performance.now());
-          setTimeout(() => run(entry.target as HTMLElement), wait);
+          const el = entry.target as HTMLElement;
+          if (entry.intersectionRatio >= 0.6) {
+            // On first load the stats card is still rising in (CSS delay ~0.75s); wait so the count is visible.
+            const wait = Math.max(0, 1050 - performance.now());
+            timers.set(el, window.setTimeout(() => run(el), wait));
+          } else if (!entry.isIntersecting) {
+            reset(el); // fully out of view: ready to count again next time
+          }
         }
       },
-      { threshold: 0.6 },
+      { threshold: [0, 0.6] },
     );
     for (const el of counters) {
-      el.textContent = `0${el.dataset.count!.replace(/^\d+/, '')}`;
+      reset(el);
       io.observe(el);
     }
   }

@@ -251,6 +251,20 @@ content:
               - name: caption
                 label: Caption
                 type: string
+      - name: contactIntro
+        label: Get In Touch intro
+        type: object
+        fields:
+          - name: eyebrow
+            label: Small line above the heading
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: text
+            label: Intro text
+            description: One or two short sentences inviting people to reach out.
+            type: text
       - name: services
         label: Services
         type: object

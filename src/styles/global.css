@@ -1435,3 +1435,10 @@ body:not(.has-overlay-header) main {
 #contact .contact-form textarea {
   background: #fff;
 }
+
+.contact-intro {
+  max-width: 600px;
+  margin: -16px auto 40px;
+  font-size: 1.15rem;
+  color: #3d424a;
+}
