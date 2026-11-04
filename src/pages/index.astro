@@ -10,6 +10,7 @@ import about from '../data/about.json';
 import staff from '../data/staff.json';
 import testimonials from '../data/testimonials.json';
 import products from '../data/products.json';
+import brandLogos from '../data/brands.json';
 import { mapsUrl, telUrl } from '../lib/url';
 import { slugify, uniqueBrandNames } from '../lib/slug';
 import { groupProducts } from '../lib/productGroups';
@@ -23,7 +24,10 @@ const heroBgSmall = await getImage({ src: heroImg, width: 900, format: 'webp', q
 const { showStaff = false, showTestimonials = false } = home.sections ?? {};
 
 const supplyGroups = groupProducts(products);
-const brands = uniqueBrandNames(products);
+// Brand strip: every manufacturer we list, with its logo when one has been uploaded (Brand logos in the CMS).
+// Brands without a logo yet show as text, so the strip never has gaps.
+const logoFor = new Map(brandLogos.filter((b) => b.logo).map((b) => [b.name.toLowerCase(), b.logo]));
+const brands = uniqueBrandNames(products).map((name) => ({ name, logo: logoFor.get(name.toLowerCase()) }));
 
 const projects = (home.projects?.slides ?? []).filter((pr) => pr.image);
 
@@ -193,7 +197,9 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
           {[0, 1].map((copy) => (
             <ul class="marquee-row" aria-hidden={copy === 1 ? 'true' : undefined}>
               {brands.map((b) => (
-                <li>{b}</li>
+                <li class:list={{ 'has-logo': b.logo }}>
+                  {b.logo ? <img src={b.logo} alt={b.name} height="40" loading="lazy" decoding="async" /> : b.name}
+                </li>
               ))}
             </ul>
           ))}

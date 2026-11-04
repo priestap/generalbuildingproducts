@@ -1073,13 +1073,40 @@ body:not(.has-overlay-header) main {
   flex-shrink: 0;
 }
 .marquee-row li {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--font-display);
   font-weight: var(--display-weight);
   font-size: 1.6rem;
-  color: #4a4f58;
+  color: #7d838c; /* matches the grey logos, so names and logos read at one weight */
   white-space: nowrap;
   padding: 0 22px;
   position: relative;
+}
+/* Logos: one consistent height, shown in grey so 35+ different brand colors read as one calm
+   strip; full color on hover. multiply drops white boxes from JPG/PNG logos. */
+.marquee-row li.has-logo {
+  padding: 0 34px;
+}
+.marquee-row li.has-logo img {
+  height: 40px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.15);
+  opacity: 0.75;
+  mix-blend-mode: multiply;
+  transition: filter 0.35s, opacity 0.35s;
+}
+.marquee-row li.has-logo:hover img {
+  filter: none;
+  opacity: 1;
+}
+/* the gold dot only separates text names; logos are separated by space alone */
+.marquee-row li.has-logo::after,
+.marquee-row li:has(+ li.has-logo)::after {
+  display: none;
 }
 .marquee-row li::after {
   content: '';

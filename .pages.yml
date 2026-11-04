@@ -310,6 +310,29 @@ content:
             options:
               path: public/images/icons
 
+  - name: brands
+    label: Brand logos
+    description: Logos for the scrolling "Manufacturers we carry" strip on the home page. A brand without a logo shows as its name. The brand list itself comes from Products.
+    type: file
+    path: src/data/brands.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{name}"
+    fields:
+      - name: name
+        label: Brand name
+        description: Must match the brand name used in Products (notes in parentheses are ignored).
+        type: string
+        required: true
+      - name: logo
+        label: Logo
+        description: An SVG or a PNG with a transparent background works best. Logos are shown in grey and turn full color on hover.
+        type: image
+        options:
+          path: public/images/brands
+
   - name: about
     label: Owners (Get In Touch)
     type: file
