@@ -136,7 +136,7 @@ ul {
   gap: 0.6em;
   padding: 0.8em 1.65em;
   border: 1.5px solid var(--bd);
-  border-radius: 3px;
+  border-radius: 6px;
   background-color: var(--bg);
   color: var(--fg);
   font: 600 0.9rem/1.2 var(--font-body);
@@ -854,8 +854,6 @@ body:not(.has-overlay-header) main {
     align-items: start;
   }
   .services-intro {
-    position: sticky;
-    top: 90px;
     padding-top: 8px;
   }
 }
@@ -881,6 +879,19 @@ body:not(.has-overlay-header) main {
   display: grid;
   gap: 36px 32px;
   grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+/* Fade-up stagger, toggled by the script in index.astro (only with JS and motion allowed) */
+.why-list.reveal-ready .why-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.75, 0.25, 1),
+    transform 0.8s cubic-bezier(0.22, 0.75, 0.25, 1);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+.why-list.reveal-ready .why-item.is-revealed {
+  opacity: 1;
+  transform: none;
 }
 .why-icon {
   display: inline-grid;
@@ -913,8 +924,8 @@ body:not(.has-overlay-header) main {
 }
 
 /* ---------- What we supply (home page) ----------
-   One card per product group: a photo, the group's marketing headline, and its categories as a
-   quiet row of links. Pointing at a category crossfades the photo to that category (script in index.astro). */
+   Quiet photo tiles, one per product group: photo, group name, one line. The whole tile links to
+   that group on the Products page, where the full category list lives. */
 .supply {
   background: #fff;
 }
@@ -929,135 +940,12 @@ body:not(.has-overlay-header) main {
 }
 .supply-head-side p {
   color: var(--muted);
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
-@media (min-width: 900px) {
-  .supply-head {
-    grid-template-columns: 1fr minmax(0, 440px);
-    align-items: end;
-  }
-  .supply-head-side p {
-    margin-bottom: 20px;
-  }
-}
-.supply-groups {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-  margin: 0;
-  padding: 0;
-}
-.supply-group {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid #e3e6ea;
-  border-radius: 8px;
-  overflow: hidden;
-  transition:
-    transform 0.4s cubic-bezier(0.22, 0.75, 0.25, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 0.75, 0.25, 1),
-    border-color 0.4s;
-}
-@media (hover: hover) {
-  .supply-group:hover {
-    transform: translateY(-4px);
-    border-color: #d5dde3;
-    box-shadow: 0 22px 40px -22px rgba(28, 50, 70, 0.35);
-  }
-}
-.sg-media {
-  position: relative;
-  display: block;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--dark);
-}
-.sg-media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.05);
-  transition:
-    opacity 0.55s cubic-bezier(0.22, 0.75, 0.25, 1),
-    transform 1.2s cubic-bezier(0.22, 0.75, 0.25, 1);
-}
-.sg-media img.is-shown {
-  opacity: 1;
-  transform: scale(1);
-}
-.sg-media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(17, 20, 26, 0.35), transparent 45%);
-  pointer-events: none;
-}
-.sg-count {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  z-index: 1;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--ink);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.sg-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 20px 22px 22px;
-}
-.sg-name {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blue);
-}
-.sg-body h3 {
-  font-size: 1.4rem;
-  line-height: 1.2;
-  color: var(--ink);
-  margin: 0 0 14px;
-}
-.sg-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0 0 20px;
-  padding: 0;
-}
-.sg-tags a {
-  display: inline-block;
-  padding: 3px 9px;
-  border-radius: 12px; /* stays tidy if a long name wraps */
-  background: #f1f5f8;
-  color: #4a5059;
-  font-size: 0.82rem;
-  font-weight: 500;
-  line-height: 1.4;
-  text-decoration: none;
-  transition: background-color 0.25s, color 0.25s;
-}
-.sg-tags a:hover,
-.sg-tags a:focus-visible {
-  background: var(--blue);
-  color: #fff;
-}
-.sg-more {
+.supply-all {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: auto;
   color: var(--blue);
   font-size: 0.85rem;
   font-weight: 600;
@@ -1065,7 +953,7 @@ body:not(.has-overlay-header) main {
   text-transform: uppercase;
   text-decoration: none;
 }
-.sg-more svg {
+.supply-all svg {
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -1073,19 +961,125 @@ body:not(.has-overlay-header) main {
   stroke-linejoin: round;
   transition: transform 0.35s cubic-bezier(0.22, 0.75, 0.25, 1);
 }
-.sg-more:hover {
-  color: #24506a;
-}
-.supply-group:hover .sg-more svg {
+.supply-all:hover svg,
+.supply-all:focus-visible svg {
   transform: translateX(4px);
 }
-@media (prefers-reduced-motion: reduce) {
-  .supply-group,
-  .sg-media img {
-    transition: none;
+@media (min-width: 900px) {
+  /* Same four columns as the tiles below, so the intro starts exactly at the third photo's edge */
+  .supply-head {
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 24px;
+    /* the link's baseline sits on the heading's last baseline */
+    align-items: last baseline;
   }
-  .supply-group:hover {
-    transform: none;
+  .supply-head > :first-child {
+    grid-column: 1 / 3;
+  }
+  .supply-head-side {
+    grid-column: 3 / 5;
+    max-width: 480px;
+  }
+}
+.supply-groups {
+  display: grid;
+  gap: 32px 24px;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 900px) {
+  .supply-groups {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.supply-groups > li {
+  list-style: none;
+}
+.supply-group {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.sg-media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--bg-soft);
+  margin-bottom: 16px;
+}
+.sg-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s cubic-bezier(0.22, 0.75, 0.25, 1);
+}
+.supply-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 6px;
+  transition: color 0.25s;
+}
+.supply-group h3 svg {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.3s,
+    transform 0.35s cubic-bezier(0.22, 0.75, 0.25, 1);
+}
+.supply-group p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.supply-group:hover h3,
+.supply-group:focus-visible h3 {
+  color: var(--blue);
+}
+.supply-group:hover h3 svg,
+.supply-group:focus-visible h3 svg {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) {
+  .supply-group:hover .sg-media img {
+    transform: scale(1.04);
+  }
+}
+/* Phones: two small tiles across, names only (the lines are on the Products page) */
+@media (max-width: 599.98px) {
+  .supply-groups {
+    gap: 24px 14px;
+  }
+  .sg-media {
+    margin-bottom: 10px;
+  }
+  .supply-group h3 {
+    font-size: 1.05rem;
+  }
+  .supply-group h3 svg {
+    display: none;
+  }
+  .supply-group p {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sg-media img,
+  .supply-group h3 svg {
+    transition: none;
   }
 }
 
@@ -1357,11 +1351,27 @@ body:not(.has-overlay-header) main {
   border: 1px solid rgba(49, 104, 135, 0.18);
   box-shadow: 0 12px 28px -14px rgba(28, 50, 70, 0.3);
 }
+.work-photo {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
 .work-tile img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  margin-bottom: 12px;
+  /* same slow zoom as the What We Supply photos */
+  transition: transform 0.9s cubic-bezier(0.22, 0.75, 0.25, 1);
+}
+@media (hover: hover) {
+  .work-tile:hover img {
+    transform: scale(1.04);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-tile img {
+    transition: none;
+  }
 }
 .tile-title {
   display: block;
@@ -1480,6 +1490,30 @@ body:not(.has-overlay-header) main {
 }
 
 /* ---------- Contact: one raised card, blueprint panel + form ---------- */
+/* Get In Touch reveal: the script in index.astro marks each piece .rv (with its order as --i) and
+   toggles .is-revealed on its group as it enters or fully leaves the screen. Without JS, or with
+   reduced motion, nothing is hidden. */
+#contact.reveal-ready .rv {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 0.75, 0.25, 1),
+    transform 0.7s cubic-bezier(0.22, 0.75, 0.25, 1);
+  transition-delay: calc(0.12s + var(--i, 0) * 60ms);
+}
+#contact.reveal-ready .contact-card.rv {
+  transform: translateY(24px);
+  transition-duration: 0.8s, 0.9s;
+  transition-delay: 0s;
+}
+#contact.reveal-ready .contact-panel .rv {
+  transform: translateX(-10px);
+}
+#contact.reveal-ready .is-revealed.rv,
+#contact.reveal-ready .is-revealed .rv {
+  opacity: 1;
+  transform: none;
+}
 .contact-card {
   display: grid;
   max-width: 1040px;

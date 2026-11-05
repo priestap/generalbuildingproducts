@@ -164,50 +164,35 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
         </div>
         <div class="supply-head-side">
           {home.supplyIntro?.text && <p>{home.supplyIntro.text}</p>}
-          <a class="btn btn-outline" href="/products/">Browse all {products.length} categories</a>
+          <a class="supply-all" href="/products/">
+            Browse all {products.length} categories
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </a>
         </div>
       </div>
       <ul class="supply-groups">
         {
-          supplyGroups.map((g) => (
-            <li class="supply-group">
-              <a class="sg-media" href={`/products/#${slugify(g.name)}`} tabindex="-1" aria-hidden="true">
-                {g.items
-                  .filter((c) => c.image)
-                  .map((c, i) => (
-                    <img
-                      src={c.image}
-                      alt=""
-                      width="400"
-                      height="270"
-                      loading="lazy"
-                      data-for={slugify(c.category)}
-                      class:list={{ 'is-shown': i === 0 }}
-                    />
-                  ))}
-                <span class="sg-count">{g.items.length} categories</span>
-              </a>
-              <div class="sg-body">
-                <p class="sg-name">{g.name}</p>
-                <h3>{g.pitch || g.name}</h3>
-                <ul class="sg-tags" aria-label={`${g.name} categories`}>
-                  {g.items.map((c) => (
-                    <li>
-                      <a href={`/products/#${slugify(c.category)}`} data-preview={slugify(c.category)}>
-                        {c.category}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <a class="sg-more" href={`/products/#${slugify(g.name)}`}>
-                  Explore<span class="sr-only"> {g.name}</span>
-                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6"></path>
-                  </svg>
+          supplyGroups.map((g) => {
+            const image = g.items.find((c) => c.image)?.image;
+            return (
+              <li>
+                <a class="supply-group" href={`/products/#${slugify(g.name)}`}>
+                  <span class="sg-media">
+                    {image && <img src={image} alt="" width="400" height="300" loading="lazy" />}
+                  </span>
+                  <h3>
+                    {g.name}
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6"></path>
+                    </svg>
+                  </h3>
+                  {g.pitch && <p>{g.pitch}</p>}
                 </a>
-              </div>
-            </li>
-          ))
+              </li>
+            );
+          })
         }
       </ul>
     </div>
@@ -272,7 +257,9 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
         <ul class="container work-tiles">
           {projects.map((pr) => (
             <li class="work-tile">
-              <img src={pr.image} alt={pr.title} width="480" height="360" loading="lazy" />
+              <span class="work-photo">
+                <img src={pr.image} alt={pr.title} width="480" height="360" loading="lazy" />
+              </span>
               <span class="tile-title">{pr.title}</span>
               {(pr.caption || pr.type) && <span class="tile-sub">{pr.caption || pr.type}</span>}
             </li>
@@ -480,23 +467,74 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
     io.observe(servicesGrid);
   }
 
-  // What We Supply: pointing at a category crossfades the group's photo to that category.
-  for (const card of document.querySelectorAll<HTMLElement>('.supply-group')) {
-    const imgs = [...card.querySelectorAll<HTMLImageElement>('.sg-media img')];
-    if (imgs.length < 2) continue;
-    const show = (key?: string) => {
-      const target = imgs.find((im) => im.dataset.for === key) ?? imgs[0];
-      imgs.forEach((im) => im.classList.toggle('is-shown', im === target));
-    };
-    card.querySelectorAll<HTMLElement>('[data-preview]').forEach((link) => {
-      const key = link.dataset.preview;
-      link.addEventListener('mouseenter', () => show(key));
-      link.addEventListener('focus', () => show(key));
-    });
-    card.addEventListener('mouseleave', () => show());
-    card.addEventListener('focusout', (e) => {
-      if (!card.contains(e.relatedTarget as Node)) show();
-    });
+  // Why GBP: the columns fade up one at a time every time they scroll into view. The stagger counts
+  // only the items arriving together (all four on desktop, one by one when they stack on phones).
+  // Each resets once it's fully off screen.
+  const whyItems = [...document.querySelectorAll<HTMLElement>('.why-item')];
+  if (whyItems.length && !reduceMotion.matches && 'IntersectionObserver' in window) {
+    document.querySelector('.why-list')!.classList.add('reveal-ready');
+    const io = new IntersectionObserver(
+      (entries) => {
+        let n = 0;
+        for (const { target, isIntersecting, intersectionRatio } of entries.sort(
+          (a, b) => whyItems.indexOf(a.target as HTMLElement) - whyItems.indexOf(b.target as HTMLElement),
+        )) {
+          const el = target as HTMLElement;
+          if (isIntersecting && intersectionRatio >= 0.3) {
+            if (el.classList.contains('is-revealed')) continue;
+            el.style.setProperty('--i', String(n++));
+            el.classList.add('is-revealed');
+          } else if (!isIntersecting) {
+            el.classList.remove('is-revealed');
+          }
+        }
+      },
+      { threshold: [0, 0.3] },
+    );
+    whyItems.forEach((el) => io.observe(el));
+  }
+
+  // Get In Touch: the intro, the card, the contact details, and the form fields fade up in a gentle
+  // stagger every time they scroll into view. Each part resets once it's fully off screen (never
+  // while someone is typing in it), so the next visit plays it again.
+  const contact = document.querySelector<HTMLElement>('#contact');
+  if (contact && !reduceMotion.matches && 'IntersectionObserver' in window) {
+    const groups: [HTMLElement | null, Element[]][] = [];
+    const intro = contact.querySelector<HTMLElement>('.text-center');
+    const card = contact.querySelector<HTMLElement>('.contact-card');
+    const panel = contact.querySelector<HTMLElement>('.contact-panel');
+    const formWrap = contact.querySelector<HTMLElement>('.contact-form-wrap');
+    if (intro) groups.push([intro, [...intro.children]]);
+    if (card) groups.push([card, [card]]);
+    if (panel)
+      groups.push([
+        panel,
+        [...panel.children].flatMap((el) => (el.matches('.contact-list') ? [...el.children] : [el])),
+      ]);
+    if (formWrap)
+      groups.push([
+        formWrap,
+        [...formWrap.querySelectorAll(':scope > .form-title, .contact-form > :not(input)')],
+      ]);
+
+    contact.classList.add('reveal-ready');
+    for (const [group, items] of groups) {
+      group!.classList.add('rv-group');
+      items.forEach((el, i) => {
+        el.classList.add('rv');
+        (el as HTMLElement).style.setProperty('--i', String(i));
+      });
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const { target, isIntersecting, intersectionRatio } of entries) {
+          if (isIntersecting && intersectionRatio >= 0.15) target.classList.add('is-revealed');
+          else if (!isIntersecting && !target.contains(document.activeElement)) target.classList.remove('is-revealed');
+        }
+      },
+      { threshold: [0, 0.15] },
+    );
+    groups.forEach(([g]) => io.observe(g!));
   }
 
   // Stats: count up from 0 to the number ("55+", "50 States") every time the band scrolls into view.
