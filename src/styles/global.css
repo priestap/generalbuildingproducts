@@ -768,26 +768,6 @@ body:not(.has-overlay-header) main {
   border-radius: 6px;
   padding: 20px;
 }
-/* Gentle one-time reveal as the grid scrolls into view. The script in index.astro only adds
-   .reveal-ready when the grid starts below the fold (and motion is allowed), so without JS
-   the cards are simply visible. */
-.services-grid.reveal-ready .service-item {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.6s cubic-bezier(0.22, 0.75, 0.25, 1),
-    transform 0.6s cubic-bezier(0.22, 0.75, 0.25, 1);
-  transition-delay: calc(var(--i, 0) * 70ms);
-}
-.services-grid.reveal-ready.is-revealed .service-item {
-  opacity: 1;
-  transform: none;
-}
-.service-item:nth-child(2) { --i: 1; }
-.service-item:nth-child(3) { --i: 2; }
-.service-item:nth-child(4) { --i: 3; }
-.service-item:nth-child(5) { --i: 4; }
-.service-item:nth-child(6) { --i: 5; }
 .service-icon {
   flex: 0 0 auto;
   display: grid;
@@ -880,7 +860,9 @@ body:not(.has-overlay-header) main {
   gap: 36px 32px;
   grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
 }
-/* Fade-up stagger, toggled by the script in index.astro (only with JS and motion allowed) */
+/* Fade-up stagger for the What We Do cards and Why GBP columns, toggled by staggerReveal() in
+   index.astro (only with JS and motion allowed, so without them everything is simply visible) */
+.services-grid.reveal-ready .service-item,
 .why-list.reveal-ready .why-item {
   opacity: 0;
   transform: translateY(16px);
@@ -889,6 +871,7 @@ body:not(.has-overlay-header) main {
     transform 0.8s cubic-bezier(0.22, 0.75, 0.25, 1);
   transition-delay: calc(var(--i, 0) * 120ms);
 }
+.services-grid.reveal-ready .service-item.is-revealed,
 .why-list.reveal-ready .why-item.is-revealed {
   opacity: 1;
   transform: none;
@@ -1812,12 +1795,44 @@ body:not(.has-overlay-header) main {
 }
 
 /* ---------- Footer ---------- */
+/* Brand touches: the gold rule from the stats card and contact panel, the logo, and a faint
+   drafting grid that fades out toward the bottom. */
 .site-footer {
-  background: var(--dark);
+  position: relative;
+  border-top: 3px solid var(--gold);
+  background:
+    linear-gradient(rgba(232, 241, 247, 0.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(232, 241, 247, 0.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    var(--dark);
   color: #ccc;
   text-align: center;
-  padding: 28px 0;
+  padding: 40px 0 32px;
   font-size: 0.95rem;
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, var(--dark));
+  pointer-events: none;
+}
+.site-footer .container {
+  position: relative;
+}
+.site-footer .footer-brand {
+  display: inline-block;
+  margin-bottom: 20px;
+  opacity: 0.92;
+  transition: opacity 0.25s;
+}
+.site-footer .footer-brand:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+.footer-brand img {
+  display: block;
+  width: 176px;
+  height: auto;
 }
 .site-footer a {
   color: #fff;
@@ -1834,6 +1849,80 @@ body:not(.has-overlay-header) main {
 .site-footer .copyright {
   margin: 0;
   opacity: 0.75;
+}
+/* Back to top: icon only, mostly for balance at the end of the copyright row */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.site-footer .to-top {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  color: #fff;
+  opacity: 0.8;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s,
+    opacity 0.25s,
+    transform 0.35s cubic-bezier(0.22, 0.75, 0.25, 1);
+}
+.to-top svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.site-footer .to-top:hover,
+.site-footer .to-top:focus-visible {
+  opacity: 1;
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-footer .to-top {
+    transition: none;
+  }
+}
+/* Desktop: logo left and contact right on one row, then a hairline and the copyright under it */
+@media (min-width: 768px) {
+  .site-footer {
+    text-align: left;
+    padding: 36px 0 28px;
+  }
+  .site-footer .container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 32px;
+  }
+  .site-footer .footer-brand {
+    margin-bottom: 0;
+  }
+  .site-footer .footer-contact {
+    justify-self: end;
+    margin: 0;
+  }
+  .footer-bottom {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .site-footer .copyright {
+    font-size: 0.85rem;
+  }
 }
 
 /* ---------- Inner pages ---------- */

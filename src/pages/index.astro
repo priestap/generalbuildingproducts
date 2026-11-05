@@ -445,40 +445,19 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
     reduceMotion.addEventListener('change', update);
   }
 
-  // What We Do: cards fade up once, in sequence, the first time the grid scrolls into view.
-  // Skipped if the grid is already on screen at load (the hero has its own entrance then).
-  const servicesGrid = document.querySelector<HTMLElement>('.services-grid');
-  if (
-    servicesGrid &&
-    !reduceMotion.matches &&
-    'IntersectionObserver' in window &&
-    servicesGrid.getBoundingClientRect().top > window.innerHeight * 0.85
-  ) {
-    servicesGrid.classList.add('reveal-ready');
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          servicesGrid.classList.add('is-revealed');
-          io.disconnect();
-        }
-      },
-      { rootMargin: '0px 0px -15% 0px' },
-    );
-    io.observe(servicesGrid);
-  }
-
-  // Why GBP: the columns fade up one at a time every time they scroll into view. The stagger counts
-  // only the items arriving together (all four on desktop, one by one when they stack on phones).
-  // Each resets once it's fully off screen.
-  const whyItems = [...document.querySelectorAll<HTMLElement>('.why-item')];
-  if (whyItems.length && !reduceMotion.matches && 'IntersectionObserver' in window) {
-    document.querySelector('.why-list')!.classList.add('reveal-ready');
+  // What We Do cards and Why GBP columns: fade up one at a time every time they scroll into view.
+  // The stagger counts only the items arriving together (a whole row on desktop, one by one when
+  // they stack on phones). Each resets once it's fully off screen, so the next visit plays it again.
+  const staggerReveal = (listSelector: string, itemSelector: string) => {
+    const list = document.querySelector<HTMLElement>(listSelector);
+    if (!list || reduceMotion.matches || !('IntersectionObserver' in window)) return;
+    const items = [...list.querySelectorAll<HTMLElement>(itemSelector)];
+    list.classList.add('reveal-ready');
     const io = new IntersectionObserver(
       (entries) => {
         let n = 0;
-        for (const { target, isIntersecting, intersectionRatio } of entries.sort(
-          (a, b) => whyItems.indexOf(a.target as HTMLElement) - whyItems.indexOf(b.target as HTMLElement),
-        )) {
+        entries.sort((a, b) => items.indexOf(a.target as HTMLElement) - items.indexOf(b.target as HTMLElement));
+        for (const { target, isIntersecting, intersectionRatio } of entries) {
           const el = target as HTMLElement;
           if (isIntersecting && intersectionRatio >= 0.3) {
             if (el.classList.contains('is-revealed')) continue;
@@ -491,8 +470,10 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
       },
       { threshold: [0, 0.3] },
     );
-    whyItems.forEach((el) => io.observe(el));
-  }
+    items.forEach((el) => io.observe(el));
+  };
+  staggerReveal('.services-grid', '.service-item');
+  staggerReveal('.why-list', '.why-item');
 
   // Get In Touch: the intro, the card, the contact details, and the form fields fade up in a gentle
   // stagger every time they scroll into view. Each part resets once it's fully off screen (never

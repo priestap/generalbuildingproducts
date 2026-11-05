@@ -6,13 +6,22 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container">
-    <p>
+    <a href="/" class="footer-brand" aria-label={`${site.companyName} home`}>
+      <img src="/images/logo.svg" alt="" width="176" height="37" loading="lazy" />
+    </a>
+    <p class="footer-contact">
       <a href={telUrl(site.phone)}><strong>{site.phone}</strong></a>
       <span class="pipe" aria-hidden="true">|</span>
       <a href={mapsUrl(site.street, site.cityStateZip)}>{site.street}, {site.cityStateZip}</a>
     </p>
-    <p class="copyright">
-      Copyright &copy; {site.copyrightStartYear} – {year}. {site.companyName} All Rights Reserved.
-    </p>
+    <div class="footer-bottom">
+      <p class="copyright">
+        Copyright &copy; {site.copyrightStartYear} – {year}. {site.companyName} All Rights Reserved.
+      </p>
+      <!-- "#top" scrolls to the top of the page (smoothly, via scroll-behavior in global.css) -->
+      <a class="to-top" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+      </a>
+    </div>
   </div>
 </footer>
