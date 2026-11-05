@@ -902,6 +902,14 @@ body:not(.has-overlay-header) main {
   font-size: 1rem;
   line-height: 1.55;
 }
+@media (max-width: 599.98px) {
+  /* One column on phones: center each credential under its icon */
+  .why-item {
+    text-align: center;
+    max-width: 34ch;
+    margin-inline: auto;
+  }
+}
 
 /* ---------- What we supply (home page) ----------
    One card per product group: a photo, the group's marketing headline, and its categories as a
@@ -1097,10 +1105,16 @@ body:not(.has-overlay-header) main {
   color: var(--muted);
   margin-bottom: 14px;
 }
+/* The strip is one composited layer: the multiply blend lives here, not on each logo. iOS Safari
+   drops tiles (logos blink out mid-scroll) when dozens of individually blended images ride inside
+   a moving layer. Multiplying the whole strip still knocks out the white boxes in JPG/PNG logos. */
 .marquee {
   display: flex;
   width: max-content;
   animation: marquee 70s linear infinite;
+  mix-blend-mode: multiply;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .marquee:hover {
   animation-play-state: paused;
@@ -1133,7 +1147,6 @@ body:not(.has-overlay-header) main {
   object-fit: contain;
   filter: grayscale(1) contrast(1.15);
   opacity: 0.75;
-  mix-blend-mode: multiply;
   transition: filter 0.35s, opacity 0.35s;
 }
 .marquee-row li.has-logo:hover img {
@@ -1157,8 +1170,11 @@ body:not(.has-overlay-header) main {
   opacity: 0.6;
 }
 @keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 @media (prefers-reduced-motion: reduce) {

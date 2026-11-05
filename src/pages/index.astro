@@ -1,5 +1,6 @@
 ---
 import { Image, getImage } from 'astro:assets';
+import sharp from 'sharp';
 import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
 import HighlightIcon from '../components/HighlightIcon.astro';
@@ -27,7 +28,26 @@ const supplyGroups = groupProducts(products);
 // Brand strip: every manufacturer we list, with its logo when one has been uploaded (Brand logos in the CMS).
 // Brands without a logo yet show as text, so the strip never has gaps.
 const logoFor = new Map(brandLogos.filter((b) => b.logo).map((b) => [b.name.toLowerCase(), b.logo]));
-const brands = uniqueBrandNames(products).map((name) => ({ name, logo: logoFor.get(name.toLowerCase()) }));
+// Each logo gets its real display width (40px tall, at most 150px wide), so the strip has its final
+// width before the images load. Without it the strip grows mid-scroll and logos jump or blink on iOS.
+const LOGO_H = 40;
+const LOGO_MAX_W = 150;
+const logoSize = async (src: string) => {
+  try {
+    const { width = 0, height = 0 } = await sharp(`public${src}`).metadata();
+    if (!width || !height) return null;
+    const w = Math.min(LOGO_MAX_W, Math.round((LOGO_H * width) / height));
+    return { width: w, height: Math.round((w * height) / width) };
+  } catch {
+    return null;
+  }
+};
+const brands = await Promise.all(
+  uniqueBrandNames(products).map(async (name) => {
+    const logo = logoFor.get(name.toLowerCase());
+    return { name, logo, size: logo ? await logoSize(logo) : null };
+  }),
+);
 
 // Our Work shows the first four projects (reorder them in the CMS to choose which).
 const projects = (home.projects?.slides ?? []).filter((pr) => pr.image).slice(0, 4);
@@ -202,7 +222,17 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
             <ul class="marquee-row" aria-hidden={copy === 1 ? 'true' : undefined}>
               {brands.map((b) => (
                 <li class:list={{ 'has-logo': b.logo }}>
-                  {b.logo ? <img src={b.logo} alt={b.name} height="40" loading="lazy" decoding="async" /> : b.name}
+                  {b.logo ? (
+                    <img
+                      src={b.logo}
+                      alt={b.name}
+                      width={b.size?.width}
+                      height={b.size?.height ?? LOGO_H}
+                      decoding="async"
+                    />
+                  ) : (
+                    b.name
+                  )}
                 </li>
               ))}
             </ul>
@@ -395,7 +425,13 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const SPEED = 0.35; // must match --parallax-speed in global.css
 
-  if (layers.length) {
+  // No parallax on iPhone/iPad: Safari's scrolling makes it jittery there. iPadOS reports itself
+  // as a Mac, so it's caught by touch support. Speed 0 also drops the layer's overhang (see global.css).
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS) layers.forEach((l) => l.parentElement!.style.setProperty('--parallax-speed', '0'));
+
+  if (layers.length && !isIOS) {
     let ticking = false;
     const update = () => {
       ticking = false;
