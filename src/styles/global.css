@@ -583,7 +583,8 @@ body:not(.has-overlay-header) main {
 }
 @media (min-width: 768px) {
   #hero .hero-inner {
-    padding-top: calc(var(--header-h) + 150px);
+    /* Scales with screen height so short laptop screens still show the buttons above the fold */
+    padding-top: calc(var(--header-h) + clamp(40px, 9vh, 110px));
     padding-bottom: 150px;
   }
 }
@@ -681,7 +682,7 @@ body:not(.has-overlay-header) main {
 }
 @media (min-width: 768px) {
   #hero:has(+ .stats) .hero-inner {
-    padding-bottom: 170px;
+    padding-bottom: clamp(116px, 18vh, 170px);
   }
 }
 .stats-list {
