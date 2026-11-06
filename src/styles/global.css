@@ -2122,6 +2122,18 @@ body:not(.has-overlay-header) main {
   object-fit: cover;
   border-radius: 6px;
 }
+/* bigger photos on wide screens, where the cards have room (the source images are ~400px wide,
+   so they stay sharp) */
+@media (min-width: 1200px) {
+  .product-card {
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+  }
+  .product-card > img {
+    width: 120px;
+    height: 120px;
+  }
+}
 .product-body h3 {
   font-size: 1.3rem;
   color: var(--ink);
