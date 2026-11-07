@@ -46,7 +46,7 @@ npm run preview   # serve dist/ locally
 
 ## One-time setup
 
-All accounts belong to the client (use a company address such as sales@gotdoors.net). Add the developer as a member, not as the owner.
+All accounts belong to the client (use a company address such as pbass@gotdoors.net). Add the developer as a member, not as the owner.
 
 1. **GitHub:** create a repo under the client's GitHub account or organization and push this project. Add the developer as a collaborator.
 2. **Cloudflare Pages:** in the client's Cloudflare account, go to Workers & Pages → Create → Pages → Connect to Git and pick the repo.
