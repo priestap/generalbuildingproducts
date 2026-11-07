@@ -1850,6 +1850,17 @@ body:not(.has-overlay-header) main {
   margin: 0;
   opacity: 0.75;
 }
+.site-footer .site-credit {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: #ccc;
+  opacity: 0.6;
+  transition: opacity 0.25s;
+}
+.site-footer .site-credit:hover,
+.site-footer .site-credit:focus-visible {
+  opacity: 1;
+}
 /* Back to top: icon only, mostly for balance at the end of the copyright row */
 .footer-bottom {
   display: flex;
@@ -1915,13 +1926,14 @@ body:not(.has-overlay-header) main {
   .footer-bottom {
     grid-column: 1 / -1;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 24px;
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .site-footer .copyright {
     font-size: 0.85rem;
+    margin-right: auto; /* pushes the credit and arrow to the right */
   }
 }
 
