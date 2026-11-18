@@ -21,15 +21,11 @@
       },
       {
         "name": "Hager",
-        "url": "https://www.hagerhinge.com/"
+        "url": "https://www.hagerco.com/"
       },
       {
-        "name": "Stanley",
-        "url": "https://www.stanleyhardware.com/"
-      },
-      {
-        "name": "Bommer",
-        "url": "https://www.bommer.com/"
+        "name": "Pemko",
+        "url": "https://www.pemko.com/"
       }
     ]
   },
@@ -39,20 +35,16 @@
     "image": "/images/products/wood-door-thumb.jpg",
     "brands": [
       {
-        "name": "Graham",
-        "url": "https://www.grahamdoors.com/"
-      },
-      {
         "name": "Oshkosh",
         "url": "https://www.oshkoshdoor.com/"
       },
       {
-        "name": "Marshfield",
-        "url": "https://www.marshfielddoorsystems.com/"
+        "name": "Forte",
+        "url": "https://www.forteopenings.com/"
       },
       {
-        "name": "Mohawk",
-        "url": "https://www.mohawkdoors.com/"
+        "name": "Karona",
+        "url": "https://www.karonadoors.com/"
       }
     ]
   },
@@ -68,6 +60,18 @@
       {
         "name": "Best",
         "url": "https://www.bestaccess.com/"
+      },
+      {
+        "name": "Sargent",
+        "url": "https://www.sargentlock.com/"
+      },
+      {
+        "name": "Schlage",
+        "url": "https://www.schlage.com/"
+      },
+      {
+        "name": "Hager",
+        "url": "https://www.hagerco.com/"
       }
     ]
   },
@@ -81,8 +85,16 @@
         "url": "https://www.corbinrusswin.com/"
       },
       {
-        "name": "Stanley",
-        "url": "https://www.stanleyhardware.com/"
+        "name": "Norton",
+        "url": "https://www.nortonrixson.com/"
+      },
+      {
+        "name": "Hager",
+        "url": "https://www.hagerco.com/"
+      },
+      {
+        "name": "LCN",
+        "url": "https://www.lcnclosers.com/"
       }
     ]
   },
@@ -96,8 +108,16 @@
         "url": "https://www.corbinrusswin.com/"
       },
       {
-        "name": "Precision",
-        "url": "https://www.precisionhardware.com/"
+        "name": "Sargent",
+        "url": "https://www.sargentlock.com/"
+      },
+      {
+        "name": "Von Duprin",
+        "url": "https://www.vonduprin.com/"
+      },
+      {
+        "name": "Hager",
+        "url": "https://www.hagerco.com/"
       }
     ]
   },
@@ -126,16 +146,12 @@
         "url": "https://www.generalpartitions.com/"
       },
       {
-        "name": "Global",
-        "url": "https://www.globalpartitions.com/"
+        "name": "ASI",
+        "url": "https://asi-globalpartitions.com/"
       },
       {
         "name": "Bobrick",
         "url": "https://www.bobrick.com/"
-      },
-      {
-        "name": "Columbia HPP",
-        "url": "https://www.psisc.com/"
       }
     ]
   },
@@ -187,19 +203,19 @@
         "url": "https://www.chasedoors.com/"
       },
       {
-        "name": "Chem Pruf (Fiberglass)",
+        "name": "Chem Pruf",
         "url": "https://www.chem-pruf.com/"
       },
       {
-        "name": "Rite Door (Stainless Steel)",
+        "name": "Rite Door",
         "url": "https://www.adamsrite.com/"
       },
       {
-        "name": "Overly MFG (Sound Doors)",
+        "name": "Overly MFG",
         "url": "https://www.overly.com/"
       },
       {
-        "name": "SpecialLite (Fiberglass)",
+        "name": "SpecialLite",
         "url": "https://www.special-lite.com/"
       }
     ]
@@ -218,15 +234,14 @@
         "url": "https://www.hesinnovations.com/"
       },
       {
-        "name": "Folger Adams",
-        "url": "https://www.foldgeradamedc.com/"
+        "name": "Folger Adam",
+        "url": "https://www.hesinnovations.com/en/products/electric-strikes"
       }
     ]
   },
   {
-    "category": "Security Alarms",
+    "category": "Security Products",
     "group": "Security",
-    "image": "/images/products/security-alarms-thumb.jpg",
     "brands": [
       {
         "name": "SDC",
@@ -239,6 +254,18 @@
       {
         "name": "Simplex",
         "url": "https://www.tksimplex.com/"
+      },
+      {
+        "name": "Adams Rite",
+        "url": "https://www.adamsrite.com/"
+      },
+      {
+        "name": "Folger Adam",
+        "url": "https://www.hesinnovations.com/en/products/electric-strikes"
+      },
+      {
+        "name": "Von Duprin",
+        "url": "https://www.vonduprin.com/"
       }
     ]
   },

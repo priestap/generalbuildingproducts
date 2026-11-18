@@ -12,27 +12,19 @@
     "logo": ""
   },
   {
-    "name": "Stanley",
-    "logo": ""
-  },
-  {
-    "name": "Bommer",
-    "logo": "/images/brands/bommer.png"
-  },
-  {
-    "name": "Graham",
-    "logo": ""
+    "name": "Pemko",
+    "logo": "/images/brands/pemko.svg"
   },
   {
     "name": "Oshkosh",
     "logo": "/images/brands/oshkosh.png"
   },
   {
-    "name": "Marshfield",
+    "name": "Forte",
     "logo": ""
   },
   {
-    "name": "Mohawk",
+    "name": "Karona",
     "logo": ""
   },
   {
@@ -44,7 +36,23 @@
     "logo": "/images/brands/best.png"
   },
   {
-    "name": "Precision",
+    "name": "Sargent",
+    "logo": ""
+  },
+  {
+    "name": "Schlage",
+    "logo": ""
+  },
+  {
+    "name": "Norton",
+    "logo": ""
+  },
+  {
+    "name": "LCN",
+    "logo": ""
+  },
+  {
+    "name": "Von Duprin",
     "logo": ""
   },
   {
@@ -52,28 +60,16 @@
     "logo": ""
   },
   {
-    "name": "Pemko",
-    "logo": "/images/brands/pemko.svg"
-  },
-  {
     "name": "General Partitions",
     "logo": "/images/brands/general-partitions.png"
   },
   {
-    "name": "Global",
-    "logo": ""
+    "name": "ASI",
+    "logo": "/images/brands/asi.png"
   },
   {
     "name": "Bobrick",
     "logo": "/images/brands/bobrick.png"
-  },
-  {
-    "name": "Columbia HPP",
-    "logo": ""
-  },
-  {
-    "name": "ASI",
-    "logo": "/images/brands/asi.png"
   },
   {
     "name": "Bradley",
@@ -82,10 +78,6 @@
   {
     "name": "Rixson",
     "logo": "/images/brands/rixson.svg"
-  },
-  {
-    "name": "Norton",
-    "logo": ""
   },
   {
     "name": "Eliason",
@@ -116,7 +108,7 @@
     "logo": "/images/brands/hes.svg"
   },
   {
-    "name": "Folger Adams",
+    "name": "Folger Adam",
     "logo": ""
   },
   {
@@ -129,6 +121,10 @@
   },
   {
     "name": "Simplex",
+    "logo": ""
+  },
+  {
+    "name": "Adams Rite",
     "logo": ""
   },
   {

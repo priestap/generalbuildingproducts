@@ -1379,53 +1379,58 @@ body:not(.has-overlay-header) main {
 .dark .smallcaps {
   color: #eee;
 }
+.dark .section-title {
+  color: var(--blue-light);
+}
+#staff.section {
+  padding: 48px 0;
+}
+.staff-intro .section-title {
+  margin-bottom: 0.4em;
+}
 .team {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* a short last row stays centered */
-  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 .team-member {
-  position: relative;
-  flex: 0 1 calc(50% - 8px);
-  max-width: 300px;
-  border-radius: 3px;
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2px 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
-@media (min-width: 768px) {
-  .team {
-    gap: 28px;
-  }
-  .team-member {
-    flex-basis: 240px;
-  }
-}
-.team-member img {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  max-height: 340px;
-  object-fit: cover;
-}
-.team-info {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: #fff;
-  border-radius: 0 3px 0 0;
-  padding: 12px 18px;
-  text-align: left;
-}
-.team-info h3 {
-  font-family: var(--font-body);
+.team-name {
   font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--gold);
-  margin: 0 0 0.1em;
+  font-size: 1.05rem;
+  color: #fff;
 }
-.team-info p {
-  margin: 0;
+.team-title {
   font-size: 14px;
-  color: var(--muted);
+  color: #b9bec8;
+}
+@media (min-width: 900px) {
+  #staff.section {
+    padding: 64px 0;
+  }
+  .staff-wrap {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .team {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    border-top: 0;
+  }
+  .team-member:nth-child(-n + 2) {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
 }
 
 /* ---------- Testimonials ---------- */
@@ -2145,6 +2150,10 @@ body:not(.has-overlay-header) main {
     width: 120px;
     height: 120px;
   }
+}
+/* a category without a photo lets its brands use the full card width */
+.product-card:not(:has(> img)) {
+  grid-template-columns: 1fr;
 }
 .product-body h3 {
   font-size: 1.3rem;

@@ -1,6 +1,6 @@
 {
   "sections": {
-    "showStaff": false,
+    "showStaff": true,
     "showTestimonials": false
   },
   "hero": {

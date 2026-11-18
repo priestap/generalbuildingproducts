@@ -1,8 +1,9 @@
 [
-  { "name": "Phil Bass", "title": "Owner, Sales, Service", "photo": "/images/staff/phil-bass.jpg" },
-  { "name": "Matt Liming", "title": "Owner, Sales", "photo": "/images/staff/placeholder.jpg" },
-  { "name": "Glen Victor Baron", "title": "Sales", "photo": "/images/staff/placeholder.jpg" },
-  { "name": "Doug Modrowski", "title": "Sales", "photo": "/images/staff/placeholder.jpg" },
-  { "name": "Karen Keller", "title": "Accounts Receivable", "photo": "/images/staff/placeholder.jpg" },
-  { "name": "Tom Gross", "title": "Warehouse Coordinator", "photo": "/images/staff/placeholder.jpg" }
+  { "name": "Darren Mohr", "title": "VP, Outside Sales" },
+  { "name": "Matt Liming", "title": "VP, Estimator & Project Manager" },
+  { "name": "Connie Zoodsma", "title": "Accounts Payable, Secretary/Treasurer" },
+  { "name": "Nicki Hoffman", "title": "Operations Manager" },
+  { "name": "David Altman", "title": "Service & Installation Manager" },
+  { "name": "Tom Goss", "title": "Warehouse Manager" },
+  { "name": "Karen Keller", "title": "Accounts Receivable" }
 ]

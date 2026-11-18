@@ -270,19 +270,18 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
   }
 
   {showStaff && (
-  <section id="staff" class="section dark text-center">
-    <div class="container">
-      <p class="smallcaps">Our Experienced Pros</p>
-      <h2 class="section-title">Our Staff</h2>
+  <section id="staff" class="section dark">
+    <div class="container staff-wrap">
+      <div class="staff-intro">
+        <p class="smallcaps">Our Experienced Pros</p>
+        <h2 class="section-title">Our Staff</h2>
+      </div>
       <ul class="team">
         {
           staff.map((m) => (
             <li class="team-member">
-              <img src={m.photo || '/images/staff/placeholder.jpg'} alt="" width="300" height="450" loading="lazy" />
-              <div class="team-info">
-                <h3>{m.name}</h3>
-                {m.title && <p>{m.title}</p>}
-              </div>
+              <span class="team-name">{m.name}</span>
+              {m.title && <span class="team-title">{m.title}</span>}
             </li>
           ))
         }

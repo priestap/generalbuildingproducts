@@ -71,12 +71,6 @@ content:
       - name: title
         label: Job title
         type: string
-      - name: photo
-        label: Photo
-        description: A portrait (taller than wide) works best.
-        type: image
-        options:
-          path: public/images/staff
 
   - name: testimonials
     label: Testimonials
@@ -114,7 +108,7 @@ content:
         fields:
           - name: showStaff
             label: Show the "Our Staff" section
-            description: Turn this on once the staff photos are ready. Edit staff under "Our Staff".
+            description: Edit staff under "Our Staff".
             type: boolean
           - name: showTestimonials
             label: Show the "Testimonials" section
@@ -362,7 +356,7 @@ content:
             type: string
           - name: photo
             label: Photo
-            description: A portrait (taller than wide) works best.
+            description: Optional. Shown as a small round photo; without one, the person's initials are shown instead.
             type: image
             options:
               path: public/images/staff
