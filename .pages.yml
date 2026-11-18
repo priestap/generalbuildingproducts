@@ -47,12 +47,11 @@ content:
             required: true
           - name: url
             label: Website address
-            description: The full address, starting with https://
+            description: The full address, starting with https://. Leave blank if the brand has no website; it will show without a link.
             type: string
-            required: true
             pattern:
-              regex: "^https?://\\S+$"
-              message: "Start the address with https:// (for example https://www.example.com/)"
+              regex: "^(https?://\\S+)?$"
+              message: "Start the address with https:// (for example https://www.example.com/), or leave it blank"
 
   - name: staff
     label: Our Staff

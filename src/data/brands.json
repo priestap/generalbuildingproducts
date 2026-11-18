@@ -5,11 +5,11 @@
   },
   {
     "name": "McKinney",
-    "logo": ""
+    "logo": "/images/brands/McKinney_DB_logo.svg"
   },
   {
     "name": "Hager",
-    "logo": ""
+    "logo": "/images/brands/hager-logo.webp"
   },
   {
     "name": "Pemko",
@@ -21,7 +21,7 @@
   },
   {
     "name": "Forte",
-    "logo": ""
+    "logo": "/images/brands/forte.svg"
   },
   {
     "name": "Karona",
@@ -37,7 +37,7 @@
   },
   {
     "name": "Sargent",
-    "logo": ""
+    "logo": "/images/brands/Sargent.png"
   },
   {
     "name": "Schlage",
@@ -45,7 +45,7 @@
   },
   {
     "name": "Norton",
-    "logo": ""
+    "logo": "/images/brands/norton.png"
   },
   {
     "name": "LCN",
@@ -53,7 +53,7 @@
   },
   {
     "name": "Von Duprin",
-    "logo": ""
+    "logo": "/images/brands/von-duprin-logo.svg"
   },
   {
     "name": "National Guard Products",
@@ -73,7 +73,7 @@
   },
   {
     "name": "Bradley",
-    "logo": ""
+    "logo": "/images/brands/bradley.png"
   },
   {
     "name": "Rixson",
@@ -93,7 +93,7 @@
   },
   {
     "name": "Rite Door",
-    "logo": ""
+    "logo": "/images/brands/Rite-ASSA_ABLOY.svg"
   },
   {
     "name": "Overly MFG",
@@ -109,7 +109,7 @@
   },
   {
     "name": "Folger Adam",
-    "logo": ""
+    "logo": "/images/brands/Folger_Adam_Web_Logo.png"
   },
   {
     "name": "SDC",
@@ -121,7 +121,7 @@
   },
   {
     "name": "Simplex",
-    "logo": ""
+    "logo": "/images/brands/simplex.jpg"
   },
   {
     "name": "Adams Rite",
@@ -133,7 +133,7 @@
   },
   {
     "name": "Trimco",
-    "logo": ""
+    "logo": "/images/brands/trimco-logo.png"
   },
   {
     "name": "Penco",
@@ -141,14 +141,14 @@
   },
   {
     "name": "Lund",
-    "logo": ""
+    "logo": "/images/brands/lund.png"
   },
   {
     "name": "Babcock Davis",
-    "logo": ""
+    "logo": "/images/brands/babcock-davis-462613.png"
   },
   {
     "name": "Salsbury",
-    "logo": ""
+    "logo": "/images/brands/salsbury.png"
   }
 ]

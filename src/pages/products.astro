@@ -69,14 +69,21 @@ const splitBrand = (name: string) => {
                         const { name, note } = splitBrand(b.name);
                         return (
                           <li>
-                            <a href={normalizeUrl(b.url)} target="_blank" rel="noopener">
-                              {name}
-                              {note && <span class="brand-note">{note}</span>}
-                              <svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
-                                <path d="M7 17L17 7M9 7h8v8"></path>
-                              </svg>
-                              <span class="sr-only"> (opens in a new tab)</span>
-                            </a>
+                            {b.url?.trim() ? (
+                              <a href={normalizeUrl(b.url)} target="_blank" rel="noopener">
+                                {name}
+                                {note && <span class="brand-note">{note}</span>}
+                                <svg class="ext" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                                  <path d="M7 17L17 7M9 7h8v8"></path>
+                                </svg>
+                                <span class="sr-only"> (opens in a new tab)</span>
+                              </a>
+                            ) : (
+                              <span class="brand-chip">
+                                {name}
+                                {note && <span class="brand-note">{note}</span>}
+                              </span>
+                            )}
                           </li>
                         );
                       })}

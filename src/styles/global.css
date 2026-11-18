@@ -1127,6 +1127,11 @@ body:not(.has-overlay-header) main {
   opacity: 0.75;
   transition: filter 0.35s, opacity 0.35s;
 }
+/* Round badge logos read tiny at 40px: let them run larger without making the strip taller. */
+.marquee-row li.has-logo img[src$='/bradley.png'] {
+  height: 64px;
+  margin-block: -12px;
+}
 .marquee-row li.has-logo:hover img {
   filter: none;
   opacity: 1;
@@ -2167,7 +2172,8 @@ body:not(.has-overlay-header) main {
   margin: 0;
   padding: 0;
 }
-.brand-list a {
+.brand-list a,
+.brand-list .brand-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
