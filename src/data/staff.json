@@ -1,9 +1,10 @@
 [
-  { "name": "Darren Mohr", "title": "VP, Outside Sales" },
-  { "name": "Matt Liming", "title": "VP, Estimator & Project Manager" },
-  { "name": "Connie Zoodsma", "title": "Accounts Payable, Secretary/Treasurer" },
-  { "name": "Nicki Hoffman", "title": "Operations Manager" },
-  { "name": "David Altman", "title": "Service & Installation Manager" },
-  { "name": "Tom Goss", "title": "Warehouse Manager" },
-  { "name": "Karen Keller", "title": "Accounts Receivable" }
+  {"name": "Phil Bass", "title": "Owner, Sales, Service"},
+  {"name": "Darren Mohr", "title": "VP, Outside Sales"},
+  {"name": "Matt Liming", "title": "VP, Estimator & Project Manager"},
+  {"name": "Connie Zoodsma", "title": "Accounts Payable, Secretary/Treasurer"},
+  {"name": "Nicki Hoffman", "title": "Operations Manager"},
+  {"name": "David Altman", "title": "Service & Installation Manager"},
+  {"name": "Tom Goss", "title": "Warehouse Manager"},
+  {"name": "Karen Keller", "title": "Accounts Receivable"}
 ]
