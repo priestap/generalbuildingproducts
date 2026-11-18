@@ -2178,6 +2178,7 @@ body:not(.has-overlay-header) main {
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
   transition: background-color 0.25s, color 0.25s;
 }
 .brand-note {
@@ -2193,10 +2194,13 @@ body:not(.has-overlay-header) main {
   stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0;
-  margin-left: -4px;
-  width: 0;
-  transition: opacity 0.25s, width 0.25s, margin 0.25s;
+  /* always takes its space (only fades in), so hovering never changes the chip's width.
+     A width change could push the chip onto the next line, out from under the cursor, and back */
+  flex: none;
+  width: 11px;
+  height: 11px;
+  opacity: 0.35;
+  transition: opacity 0.25s;
 }
 .brand-list a:hover {
   background: var(--blue);
@@ -2208,8 +2212,6 @@ body:not(.has-overlay-header) main {
 .brand-list a:hover .ext,
 .brand-list a:focus-visible .ext {
   opacity: 1;
-  width: 12px;
-  margin-left: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .product-card:target {

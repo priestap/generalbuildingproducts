@@ -128,7 +128,7 @@
     "brands": [
       {
         "name": "National Guard Products",
-        "url": "https://www.ngpinc.com/"
+        "url": "https://www.ngp.com/"
       },
       {
         "name": "Pemko",
@@ -253,7 +253,7 @@
       },
       {
         "name": "Simplex",
-        "url": "https://www.tksimplex.com/"
+        "url": "https://www.dormakaba.com/us-en/solutions/products/door-hardware/simplex-mechanical-pushbutton-locks"
       },
       {
         "name": "Adams Rite",
@@ -327,8 +327,8 @@
     "image": "/images/products/mailboxes-thumb.jpg",
     "brands": [
       {
-        "name": "Salisbury",
-        "url": "https://www.pencoproducts.com/"
+        "name": "Salsbury",
+        "url": "https://www.salsburyindustries.com/"
       }
     ]
   }
