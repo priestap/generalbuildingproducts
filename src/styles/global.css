@@ -1127,8 +1127,9 @@ body:not(.has-overlay-header) main {
   opacity: 0.75;
   transition: filter 0.35s, opacity 0.35s;
 }
-/* Round badge logos read tiny at 40px: let them run larger without making the strip taller. */
-.marquee-row li.has-logo img[src$='/bradley.png'] {
+/* Square and round logos (Bradley, Folger Adam) read tiny at 40px: let them run larger without
+   making the strip taller. index.astro adds .is-square to any logo less than 1.5x as wide as tall. */
+.marquee-row li.is-square img {
   height: 64px;
   margin-block: -12px;
 }

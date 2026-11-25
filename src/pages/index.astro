@@ -206,7 +206,7 @@ const owners = (about.owners ?? []).filter((o) => o.name && o.photo);
           {[0, 1].map((copy) => (
             <ul class="marquee-row" aria-hidden={copy === 1 ? 'true' : undefined}>
               {brands.map((b) => (
-                <li class:list={{ 'has-logo': b.logo }}>
+                <li class:list={{ 'has-logo': b.logo, 'is-square': b.size && b.size.width / b.size.height < 1.5 }}>
                   {b.logo ? (
                     <img
                       src={b.logo}
